@@ -127,9 +127,7 @@
     /* HERO */  
     .hero {  
         height: 40vh;  
-        background:  
-        linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.65)),  
-        url('assets/images/pic1.png');  /* Offline Hero Image */
+        background: linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.65)), url('assets/images/pic1.png');  
         background-size: cover;  
         background-position: center;  
         display: flex;  
@@ -139,7 +137,7 @@
         text-align: center;  
         color: white;  
         padding: 20px;  
-        margin-top: 85px; /* Offset for header */
+        margin-top: 85px;  
     }  
 
     .hero h1 {  
@@ -201,6 +199,7 @@
         height: 240px;  
         position: relative;  
         overflow: hidden;  
+        background: #eee;
     }  
 
     .slide {  
@@ -247,7 +246,7 @@
         font-size: 0.83rem;  
     }  
 
-    /* BUTTON */  
+    /* BUTTONS */  
     .btn-main {  
         width: 100%;  
         padding: 13px;  
@@ -264,7 +263,16 @@
         background: var(--sunset-orange);  
     }  
 
-    /* SUGGESTION */  
+    .yt-link {
+        text-decoration: none;
+        color: #c4302b;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* SUGGESTION SECTION */  
     .suggestion-section {  
         background: var(--safari-green);  
         color: white;  
@@ -274,7 +282,7 @@
 
     .suggestion-box {  
         max-width: 650px;  
-        margin: auto;  
+        margin: 30px auto 0;  
     }  
 
     .suggestion-box input,  
@@ -284,6 +292,7 @@
         border: none;  
         border-radius: 10px;  
         margin: 10px 0;  
+        font-size: 1rem;
     }  
 
     /* MODAL */  
@@ -318,14 +327,124 @@
         margin: 15px 0;  
     }  
 
-    /* FOOTER */  
-    .master-footer {  
-        background: var(--earth-black);  
-        color: white;  
-        padding: 60px 8% 20px;  
-    }  
+    .modal input {
+        width: 100%;
+        padding: 13px;
+        margin: 10px 0;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+    }
 
-    .
+    /* FOOTER */  
+    .master-footer {
+        background: #1a1a1a;
+        color: white;
+        padding: 80px 8% 30px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .master-footer::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 10px;
+        background: linear-gradient(90deg, var(--sunset-orange), var(--safari-green), var(--sky-blue));
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 50px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .footer-brand h2 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+        color: var(--white);
+    }
+
+    .footer-brand p {
+        line-height: 1.8;
+        color: #bbb;
+        max-width: 400px;
+    }
+
+    .footer-links h3 {
+        font-family: 'Montserrat';
+        margin-bottom: 25px;
+        position: relative;
+    }
+
+    .footer-links h3::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background: var(--sunset-orange);
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 18px;
+        text-decoration: none;
+        color: #ddd;
+        transition: 0.3s;
+    }
+
+    .contact-item:hover {
+        color: var(--sky-blue);
+        transform: translateX(8px);
+    }
+
+    .social-row {
+        margin-top: 30px;
+        display: flex;
+        gap: 15px;
+    }
+
+    .social-icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 12px;
+        background: #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-decoration: none;
+        transition: 0.4s;
+        border: 1px solid #444;
+    }
+
+    .social-icon:hover {
+        transform: translateY(-5px);
+        background: var(--safari-green);
+        border-color: var(--sunset-orange);
+    }
+
+    .bottom-bar {
+        text-align: center;
+        margin-top: 60px;
+        padding-top: 25px;
+        border-top: 1px solid #333;
+        font-size: 0.85rem;
+        color: #777;
+    }
+
+    .footer-nav { list-style: none; }
+    .footer-nav li { margin-bottom: 12px; }
+    .footer-nav a { color: #bbb; text-decoration: none; transition: 0.3s; }
+    .footer-nav a:hover { color: white; padding-left: 5px; }
 
 </style>
 </head>  
@@ -335,8 +454,7 @@
 
 <header class="header">  
     <div class="logo-circle">  
-        <img src="assets/images/logo.png"  
-        onerror="this.src='https://cdn-icons-png.flaticon.com/512/826/826070.png'">  
+        <img src="assets/images/logo.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/826/826070.png'">  
     </div>  
 
     <div class="hamburger" onclick="toggleMenu()">  
@@ -347,28 +465,16 @@
 </header>  
 
 <nav class="side-menu" id="sideMenu">  
-    
-      <a href="index.html">Home</a>
+    <a href="index.html">Home</a>
     <a href="#active-trips" onclick="toggleMenu()">Upcoming Trips</a>  
     <a href="#suggest" onclick="toggleMenu()">Custom Suggestions</a>  
     <a href="#past-trips" onclick="toggleMenu()">Past Adventures</a>  
-    
     <a href="contact.html">Contact Us</a>
 </nav>
 
-</nav>  
-
 <section class="hero">  
-    <h1>  
-        Dynamic  
-        <span style="color:var(--sunset-orange);">  
-            Adventures Safaris  
-        </span>  
-    </h1>  
-    <p>  
-        Kenya's Premier Safari, Hiking, Beach and Luxury  
-        Adventure Experience.  
-    </p>
+    <h1>Dynamic <span style="color:var(--sunset-orange);">Adventures Safaris</span></h1>  
+    <p>Kenya's Premier Safari, Hiking, Beach and Luxury Adventure Experience.</p>
 </section>  
 
 <main class="section" id="active-trips">  
@@ -423,163 +529,16 @@
     </div>
 </div>  
 
-
-<style>
-    /* LIVELY FOOTER STYLES */
-    .master-footer {
-        background: #1a1a1a;
-        color: white;
-        padding: 80px 8% 30px;
-        position: relative;
-        overflow: hidden;
-    }
-
-    /* The "Wave" top border to make it less rigid */
-    .master-footer::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 10px;
-        background: linear-gradient(90deg, var(--sunset-orange), var(--safari-green), var(--sky-blue));
-    }
-
-    .footer-content {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 50px;
-        position: relative;
-        z-index: 2;
-    }
-
-    .footer-brand h2 {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 1.8rem;
-        margin-bottom: 15px;
-        background: linear-gradient(to right, #fff, var(--gray-fade));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .footer-brand p {
-        line-height: 1.8;
-        color: #bbb;
-        max-width: 400px;
-    }
-
-    .footer-links h3 {
-        font-family: 'Montserrat';
-        margin-bottom: 25px;
-        position: relative;
-        display: inline-block;
-    }
-
-    .footer-links h3::after {
-        content: '';
-        position: absolute;
-        bottom: -8px;
-        left: 0;
-        width: 40px;
-        height: 3px;
-        background: var(--sunset-orange);
-        border-radius: 2px;
-    }
-
-    .contact-item {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 18px;
-        text-decoration: none;
-        color: #ddd;
-        transition: 0.3s;
-    }
-
-    .contact-item:hover {
-        color: var(--sky-blue);
-        transform: translateX(8px);
-    }
-
-    .contact-item i {
-        font-size: 1.2rem;
-        color: var(--sunset-orange);
-    }
-
-    /* Energetic Social Icons */
-    .social-row {
-        margin-top: 30px;
-        display: flex;
-        gap: 15px;
-    }
-
-    .social-icon {
-        width: 45px;
-        height: 45px;
-        border-radius: 12px;
-        background: #333;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        text-decoration: none;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        border: 1px solid #444;
-    }
-
-    .social-icon:hover {
-        transform: translateY(-10px) rotate(8deg);
-        background: var(--safari-green);
-        border-color: var(--sunset-orange);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    }
-
-    .bottom-bar {
-        text-align: center;
-        margin-top: 60px;
-        padding-top: 25px;
-        border-top: 1px solid #333;
-        font-size: 0.85rem;
-        color: #777;
-        letter-spacing: 1px;
-    }
-
-    /* Quick Links list */
-    .footer-nav {
-        list-style: none;
-    }
-    .footer-nav li { margin-bottom: 12px; }
-    .footer-nav a { 
-        color: #bbb; 
-        text-decoration: none; 
-        transition: 0.3s; 
-    }
-    .footer-nav a:hover { color: white; padding-left: 5px; }
-
-</style>
-
 <footer class="master-footer">
     <div class="footer-content">
         <div class="footer-brand">
             <h2>Dynamic Adventures & Safaris</h2>
-            <p>
-                Crafting unforgettable memories through authentic safari, 
-                high-altitude hiking, and serene beach escapes across 
-                the beautiful landscapes of East Africa.
-            </p>
+            <p>Crafting unforgettable memories through authentic safari, high-altitude hiking, and serene beach escapes across East Africa.</p>
             <div class="social-row">
-                <a href="https://wa.me/254797954580" class="social-icon" title="WhatsApp">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-                <a href="#" class="social-icon" title="Instagram">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="#" class="social-icon" title="TikTok">
-                    <i class="fab fa-tiktok"></i>
-                </a>
-                <a href="#" class="social-icon" title="X (Twitter)">
-                    <i class="fab fa-x-twitter"></i>
-                </a>
+                <a href="https://wa.me/254797954580" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-x-twitter"></i></a>
             </div>
         </div>
 
@@ -589,43 +548,19 @@
                 <li><a href="#active-trips">Upcoming Expeditions</a></li>
                 <li><a href="#past-trips">Adventure Archive</a></li>
                 <li><a href="#suggest">Custom Package Request</a></li>
-                <li><a href="#">Travel Insurance Info</a></li>
             </ul>
         </div>
 
         <div class="footer-links">
             <h3>Get In Touch</h3>
-            
-            <a href="tel:0746348267" class="contact-item">
-                <i class="fas fa-phone-alt"></i>
-                <span>0746 348 267 / 0797 954 580</span>
-            </a>
-
-            <a href="mailto:dynamicadventuressafaris@gmail.com" class="contact-item">
-                <i class="fas fa-envelope-open-text"></i>
-                <span>dynamicadventuressafaris@gmail.com</span>
-            </a>
-
-            <a href="https://wa.me/254797954580" class="contact-item">
-                <i class="fab fa-whatsapp-square"></i>
-                <span>24/7 WhatsApp Support</span>
-            </a>
-            
-            <p style="font-size: 0.8rem; color: var(--gray-fade); margin-top: 10px;">
-                <i class="fas fa-map-marker-alt" style="color: var(--sunset-orange);"></i> 
-                Nairobi, Kenya - Global Operations
-            </p>
+            <a href="tel:0746348267" class="contact-item"><i class="fas fa-phone-alt"></i><span>0746 348 267</span></a>
+            <a href="mailto:dynamicadventuressafaris@gmail.com" class="contact-item"><i class="fas fa-envelope"></i><span>Email Us</span></a>
+            <p><i class="fas fa-map-marker-alt" style="color:var(--sunset-orange)"></i> Nairobi, Kenya</p>
         </div>
     </div>
 
     <div class="bottom-bar">
         &copy; 2026 DYNAMIC ADVENTURES & SAFARIS. ALL RIGHTS RESERVED.
-        <span class="dev-credit">
-            Site designed by 
-            <a href="https://wa.me/254790435584?text=Hallo%20developers%20Dan74tech%20am%20using%20the%20dynamic%20adventures%20and%20safaris%20web%20it%20is%20cool.">
-                Dan74tech Media
-            </a>
-        </span>
     </div>
 </footer>
 
@@ -633,10 +568,6 @@
 const WHATSAPP_NUM = "254797954580";  
 let currentBookingTrip = "";  
   
-/* =========================  
-   ADMIN EDITABLE DATA 
-   (Update local src paths & yt links here)
-========================= */  
 const state = {  
     active: [  
         {  
@@ -646,12 +577,7 @@ const state = {
             price: "KSh 55,000",  
             pickups: ["Kencom CBD", "TRM Mall", "Mlolongo"],  
             reqs: ["National ID", "Warm Clothes", "Camera"],  
-            imgs: [  
-                "assets/images/pic2.png",  
-                "assets/images/pic3.png",  
-                "assets/images/pic4.png",  
-                "assets/images/pic5.png"  
-            ]  
+            imgs: ["assets/images/pic2.png", "assets/images/pic3.png", "assets/images/pic4.png"]  
         },  
         {  
             title: "Mt Kenya Sirimon Trek",  
@@ -660,266 +586,119 @@ const state = {
             price: "KSh 12,500",  
             pickups: ["Bata Hilton", "TRM", "Nanyuki"],  
             reqs: ["Hiking Boots", "Poncho", "Heavy Jacket"],  
-            imgs: [  
-                "assets/images/pic6.png",  
-                "assets/images/pic7.png",  
-                "assets/images/pic8.png"  
-            ]  
-        },  
-        {  
-            title: "Diani Beach Escape",  
-            date: "August 11, 2026",  
-            deadline: "August 05, 2026 23:59:59",  
-            price: "KSh 28,000",  
-            pickups: ["JKIA", "Mombasa", "Nyali"],  
-            reqs: ["Beach Wear", "Sunscreen", "ID"],  
-            imgs: [  
-                "assets/images/pic9.png",  
-                "assets/images/pic10.png",  
-                "assets/images/pic11.png"  
-            ]  
-        },  
-        {  
-            title: "Amboseli Wildlife Tour",  
-            date: "September 08, 2026",  
-            deadline: "September 01, 2026 23:59:59",  
-            price: "KSh 18,500",  
-            pickups: ["Syokimau", "Kitengela", "Emali"],  
-            reqs: ["Camera", "Binoculars", "ID"],  
-            imgs: [  
-                "assets/images/pic12.png",  
-                "assets/images/pic13.png",  
-                "assets/images/pic14.png"  
-            ]  
-        },  
-        {  
-            title: "Watamu Marine Adventure",  
-            date: "October 21, 2026",  
-            deadline: "October 15, 2026 23:59:59",  
-            price: "KSh 35,000",  
-            pickups: ["Mombasa", "Malindi", "Watamu"],  
-            reqs: ["Swimming Wear", "Sunscreen", "Passport/ID"],  
-            imgs: [  
-                "assets/images/pic15.png",  
-                "assets/images/pic16.png",  
-                "assets/images/pic17.png"  
-            ]  
-        }  
+            imgs: ["assets/images/pic6.png", "assets/images/pic7.png", "assets/images/pic8.png"]  
+        }
     ],  
     past: [  
         {  
             title: "Diani Beach Vibes",  
             date: "January 2026",  
             yt: "https://youtube.com/watch?v=your_video_id",  
-            imgs: [  
-                "assets/images/pic18.png",  
-                "assets/images/pic19.png",  
-                "assets/images/pic20.png"  
-            ]  
-        },  
-        {  
-            title: "Hell's Gate Cycling",  
-            date: "March 2026",  
-            yt: "https://youtube.com/watch?v=your_video_id",  
-            imgs: [  
-                "assets/images/pic21.png",  
-                "assets/images/pic22.png",  
-                "assets/images/pic23.png"  
-            ]  
-        },  
-        {  
-            title: "Tsavo Red Elephant Safari",  
-            date: "April 2026",  
-            yt: "https://youtube.com/watch?v=your_video_id",  
-            imgs: [  
-                "assets/images/pic24.png",  
-                "assets/images/pic25.png",  
-                "assets/images/pic2.png"  
-            ]  
-        },  
-        {  
-            title: "Naivasha Camp Weekend",  
-            date: "May 2026",  
-            yt: "https://youtube.com/watch?v=your_video_id",  
-            imgs: [  
-                "assets/images/pic14.png",  
-                "assets/images/pic8.png",  
-                "assets/images/pic9.png"  
-            ]  
-        },  
-        {  
-            title: "Samburu Cultural Expedition",  
-            date: "June 2026",  
-            yt: "https://youtube.com/watch?v=your_video_id",  
-            imgs: [  
-                "assets/images/pic3.png",  
-                "assets/images/pic1.png",  
-                "assets/images/pic7.png"  
-            ]  
-        }  
+            imgs: ["assets/images/pic18.png", "assets/images/pic19.png"]  
+        }
     ]  
 };  
   
-/* MENU TOGGLE */  
 function toggleMenu() {  
     document.getElementById('sideMenu').classList.toggle('active');  
     document.getElementById('overlay').classList.toggle('active');  
 }  
   
-/* RENDER CONTENT */  
 function render() {  
     const activeCont = document.getElementById('active-container');  
-    
-    // Render Active Events
     state.active.forEach((ev, idx) => {  
         activeCont.innerHTML += `  
         <div class="card">  
             <div class="countdown" id="timer-${idx}">Loading...</div>  
             <div class="slider-container">  
-                ${ev.imgs.map((img, i) => `
-                    <img src="${img}" class="slide ${i === 0 ? 'active' : ''}" data-event="${idx}">
-                `).join('')}  
+                ${ev.imgs.map((img, i) => `<img src="${img}" class="slide ${i === 0 ? 'active' : ''}">`).join('')}  
             </div>  
             <div class="card-body">  
                 <h3>${ev.title}</h3>  
-                <span class="info-point"><i class="fas fa-calendar"></i> Event Date: ${ev.date}</span>  
-                <span class="info-point"><i class="fas fa-bus"></i> Pickups: ${ev.pickups.join(', ')}</span>  
-                <div class="req-list">  
-                    <strong>Requirements:</strong><br>  
-                    ${ev.reqs.map(r => `• ${r}`).join('<br>')}  
-                </div>  
-                <div style="font-size:1.2rem; font-weight:700; color:var(--safari-green); margin-bottom:15px;">  
-                    ${ev.price}  
-                </div>  
+                <span class="info-point"><i class="fas fa-calendar"></i> ${ev.date}</span>  
+                <span class="info-point"><i class="fas fa-bus"></i> ${ev.pickups.join(', ')}</span>  
+                <div class="req-list"><strong>Requirements:</strong><br>${ev.reqs.map(r => `• ${r}`).join('<br>')}</div>  
+                <div style="font-size:1.2rem; font-weight:700; color:var(--safari-green); margin-bottom:15px;">${ev.price}</div>  
                 <button class="btn-main" onclick="openModal('${ev.title}', ${idx})">Book Now</button>  
             </div>  
-        </div>  
-        `;  
+        </div>`;  
         startTimer(ev.deadline, `timer-${idx}`);  
     });  
-  
-    // Render Past Events
+
     const pastCont = document.getElementById('past-container');  
-    state.past.forEach((ev, idx) => {  
+    state.past.forEach((ev) => {  
         pastCont.innerHTML += `  
         <div class="card">  
             <div class="slider-container">  
-                ${ev.imgs.map((img, i) => `
-                    <img src="${img}" class="slide ${i === 0 ? 'active' : ''}" data-past="${idx}">
-                `).join('')}  
+                ${ev.imgs.map((img, i) => `<img src="${img}" class="slide ${i === 0 ? 'active' : ''}">`).join('')}  
             </div>  
             <div class="card-body">  
                 <h3>${ev.title}</h3>  
                 <p style="margin-bottom:15px; font-size:0.85rem;">Completed: ${ev.date}</p>  
-                <a href="${ev.yt}" target="_blank" class="yt-link">  
-                    <i class="fab fa-youtube"></i> Watch Highlights  
-                </a>  
+                <a href="${ev.yt}" target="_blank" class="yt-link"><i class="fab fa-youtube"></i> Watch Highlights</a>  
             </div>  
-        </div>  
-        `;  
+        </div>`;  
     });  
-  
     startSlides();  
 }  
   
-/* IMAGE JUMP SLIDES (RESTORED FUNCTIONALITY) */  
 function startSlides() {  
-    const containers = document.querySelectorAll('.slider-container');  
-    containers.forEach(container => {  
+    document.querySelectorAll('.slider-container').forEach(container => {  
         const slides = container.querySelectorAll('.slide');  
         if(slides.length <= 1) return;
-        
-        let currentIndex = 0;
+        let current = 0;
         setInterval(() => {
-            slides[currentIndex].classList.remove('active');
-            currentIndex = (currentIndex + 1) % slides.length;
-            slides[currentIndex].classList.add('active');
-        }, 3500); // Transitions every 3.5 seconds
+            slides[current].classList.remove('active');
+            current = (current + 1) % slides.length;
+            slides[current].classList.add('active');
+        }, 3500);
     });  
 }  
 
-/* COUNTDOWN TIMER LOGIC */
 function startTimer(deadline, elementId) {
-    const countDownDate = new Date(deadline).getTime();
-    const interval = setInterval(function() {
+    const target = new Date(deadline).getTime();
+    setInterval(() => {
         const now = new Date().getTime();
-        const distance = countDownDate - now;
+        const diff = target - now;
         const el = document.getElementById(elementId);
-        
-        if (!el) { clearInterval(interval); return; }
-        
-        if (distance < 0) {
-            clearInterval(interval);
-            el.innerHTML = "BOOKING CLOSED";
-            el.style.color = "red";
-            return;
-        }
-        
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        
-        el.innerHTML = `Closes in: ${days}d ${hours}h ${minutes}m`;
+        if (!el) return;
+        if (diff < 0) { el.innerHTML = "BOOKING CLOSED"; return; }
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        el.innerHTML = `Closes in: ${d}d ${h}h ${m}m`;
     }, 1000);
 }
 
-/* MODAL / BOOKING SYSTEM LOGIC */
 function openModal(title, index) {
     currentBookingTrip = title;
     document.getElementById('modalTitle').innerText = "Book: " + title;
-    
-    // Populate Pickups dynamically based on trip
-    const trip = state.active[index];
     const pickSelect = document.getElementById('bkPick');
     pickSelect.innerHTML = '<option value="">Select Pick-up Point</option>';
-    trip.pickups.forEach(p => {
-        pickSelect.innerHTML += `<option value="${p}">${p}</option>`;
-    });
-    
+    state.active[index].pickups.forEach(p => pickSelect.innerHTML += `<option value="${p}">${p}</option>`);
     document.getElementById('bookingModal').style.display = 'flex';
 }
 
-function closeModal() {
-    document.getElementById('bookingModal').style.display = 'none';
-}
+function closeModal() { document.getElementById('bookingModal').style.display = 'none'; }
 
 function confirmBooking() {
     const name = document.getElementById('bkName').value;
-    const loc = document.getElementById('bkLoc').value;
     const phone = document.getElementById('bkPhone').value;
-    const pick = document.getElementById('bkPick').value;
-    const amount = document.getElementById('bkAmount').value;
-
-    if (!name || !phone || !pick) {
-        alert("Please fill out your Name, Phone Number, and Pick-up Point to proceed.");
-        return;
-    }
-
-    // Format WhatsApp message
-    const message = `*NEW BOOKING REQUEST*%0A%0A*Trip:* ${currentBookingTrip}%0A*Name:* ${name}%0A*Location:* ${loc}%0A*Phone:* ${phone}%0A*Pick-up:* ${pick}%0A*Payment Strategy:* ${amount}`;
-    window.open(`https://wa.me/${WHATSAPP_NUM}?text=${message}`, '_blank');
+    if (!name || !phone) { alert("Please fill Name and Phone."); return; }
+    const msg = `*NEW BOOKING*%0A*Trip:* ${currentBookingTrip}%0A*Name:* ${name}%0A*Phone:* ${phone}`;
+    window.open(`https://wa.me/${WHATSAPP_NUM}?text=${msg}`, '_blank');
     closeModal();
 }
 
-/* CUSTOM SUGGESTION LOGIC */
 function sendSuggestion() {
     const name = document.getElementById('sugName').value;
     const place = document.getElementById('sugPlace').value;
-    const why = document.getElementById('sugWhy').value;
-
-    if (!name || !place) {
-        alert("Please provide at least your name and dream destination.");
-        return;
-    }
-
-    const message = `*DREAM DESTINATION SUGGESTION*%0A%0A*From:* ${name}%0A*Destination:* ${place}%0A*Why:* ${why}`;
-    window.open(`https://wa.me/${WHATSAPP_NUM}?text=${message}`, '_blank');
+    if (!name || !place) { alert("Fill name and destination."); return; }
+    const msg = `*SUGGESTION*%0A*From:* ${name}%0A*Place:* ${place}`;
+    window.open(`https://wa.me/${WHATSAPP_NUM}?text=${msg}`, '_blank');
 }
 
-// Initialize rendering on page load
 window.onload = render;
-
 </script>  
 </body>  
 </html>
-by
