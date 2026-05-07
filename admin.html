@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard | Dynamic Adventures</title>
+    <style>
+        body { font-family: 'Poppins', sans-serif; background: #f4f7f6; padding: 40px; }
+        .container { max-width: 1000px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        h2 { color: #2E4D32; border-bottom: 2px solid #E67E22; padding-bottom: 10px; }
+        form { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 40px; }
+        input, textarea { padding: 12px; border: 1px solid #ddd; border-radius: 6px; width: 100%; }
+        .full-width { grid-column: span 2; }
+        button { background: #2E4D32; color: white; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        button.delete { background: #e74c3c; padding: 5px 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #eee; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Add New Expedition</h2>
+    <form id="tripForm">
+        <input type="text" id="title" placeholder="Trip Title" required>
+        <input type="number" id="price" placeholder="Price (USD)" required>
+        <textarea id="description" class="full-width" placeholder="Describe the adventure..."></textarea>
+        <input type="datetime-local" id="deadline" title="Booking Deadline">
+        <input type="datetime-local" id="event_date" title="Event Date">
+        <input type="file" id="image" class="full-width">
+        <button type="submit" class="full-width">🚀 Upload to Live Site</button>
+    </form>
+
+    <h2>Manage Active Trips</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Trip Name</th>
+                <th>Status</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="tripTableBody">
+            </tbody>
+    </table>
+</div>
+
+<script>
+    const API_URL = 'https://dynamicsafaris-1.onrender.com/api';
+
+    // 1. Fetch and Display Trips
+    async function loadTrips() {
+        const res = await fetch(`${API_URL}/trips`);
+        const trips = await res.json();
+        const tableBody = document.getElementById('tripTableBody');
+        tableBody.innerHTML = '';
+
+        trips.forEach(trip => {
+            tableBody.innerHTML += `
+                <tr>
+                    <td><strong>${trip.title}</strong></td>
+                    <td>${trip.status}</td>
+                    <td>$${trip.price}</td>
+                    <td>
+                        <button class="delete" onclick="deleteTrip('${trip.id}')">Delete</button>
+                    </td>
+                </tr>
+            `;
+        });
+    }
+
+    // 2. Add New Trip Logic
+    document.getElementById('tripForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('title', document.getElementById('title').value);
+        formData.append('price', document.getElementById('price').value);
+        formData.append('description', document.getElementById('description').value);
+        formData.append('deadline', document.getElementById('deadline').value);
+        formData.append('event_date', document.getElementById('event_date').value);
+        formData.append('image', document.getElementById('image').files[0]);
+
+        const res = await fetch(`${API_URL}/admin/add-trip`, {
+            method: 'POST',
+            body: formData
+        });
+
+        if (res.ok) {
+            alert('Adventure Added!');
+            location.reload();
+        }
+    });
+
+    // 3. Delete Trip Logic
+    async function deleteTrip(id) {
+        if(confirm("Are you sure you want to remove this trip?")) {
+            await fetch(`${API_URL}/admin/trips/${id}`, { method: 'DELETE' });
+            loadTrips();
+        }
+    }
+
+    loadTrips();
+</script>
+</body>
+</html>
