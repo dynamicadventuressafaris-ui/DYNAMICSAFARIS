@@ -1,14 +1,22 @@
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
+const { Pool } = require('pg');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const multer = require('multer');
-const pool = require('./db');
 require('dotenv').config();
 
 const app = express();
+
+// --- 1. CONFIGURATION ---
 app.use(cors());
 app.use(express.json());
+
+// Database Connection (Neon)
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL || "postgresql://neondb_owner:npg_yrDfL8MR0xeF@ep-lucky-pond-a1bmf9zd-pooler.c-3.eu-central-1.aws.neon.tech/neondb?sslmode=require",
+});
 
 // Cloudinary Config
 cloudinary.config({
@@ -20,13 +28,22 @@ cloudinary.config({
 // Media Upload Engine
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  params: { folder: 'voyagevibe_trips' }
+  params: { folder: 'dynamic_adventures_safaris' }
 });
 const upload = multer({ storage: storage });
 
-// --- ROUTES ---
+// --- 2. SERVE FRONTEND (Fixes "Cannot GET /") ---
+// This tells Express to serve your HTML, CSS, and JS files from the root directory
+app.use(express.static(path.join(__dirname, '/')));
 
-// A. PUBLIC API: Fetch All with Filter Logic
+// Root Route
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// --- 3. BACKEND API ROUTES ---
+
+// A. PUBLIC API: Fetch All with Status Logic
 app.get('/api/trips', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM adventures ORDER BY event_date ASC');
@@ -49,7 +66,7 @@ app.get('/api/trips', async (req, res) => {
   }
 });
 
-// B. ADMIN API: Create Trip (Handles Media + DB)
+// B. ADMIN API: Create Trip
 app.post('/api/admin/add-trip', upload.single('image'), async (req, res) => {
   try {
     const { title, description, price, requirements, deadline, event_date } = req.body;
@@ -67,5 +84,6 @@ app.post('/api/admin/add-trip', upload.single('image'), async (req, res) => {
   }
 });
 
+// --- 4. START SERVER ---
 const PORT = process.env.PORT || 10000;
-app.listen(PORT, () => console.log(`VoyageVibe active on port ${PORT}`));
+app.listen(PORT, () => console.log(`Dynamic Adventures live on port ${PORT}`));
