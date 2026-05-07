@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us | Dynamic Adventures & Safaris</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
@@ -17,106 +17,118 @@
             --bone: #FDFCF0;
             --earth-black: #1A1A1A;
             --white: #FFFFFF;
+            --gray-fade: #95a5a6;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
 
         body {
             background-color: var(--bone);
-            background-image: url("https://www.transparenttextures.com/patterns/cubes.png"); 
             color: var(--earth-black);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         /* --- NAVIGATION --- */
         .header {
             position: fixed; top: 0; width: 100%; z-index: 1000;
             background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
-            border-bottom: 4px solid var(--sunset-orange); padding: 10px 5%;
+            border-bottom: 4px solid var(--safari-green); padding: 10px 5%;
             display: flex; justify-content: space-between; align-items: center;
         }
 
         .logo-circle {
             width: 60px; height: 60px; border-radius: 50%; overflow: hidden;
-            border: 3px solid var(--safari-green); background: white;
+            border: 2px solid var(--safari-green); background: white;
             display: flex; align-items: center; justify-content: center;
-            transition: 0.5s;
         }
-        .logo-circle:hover { transform: rotate(360deg); }
-        .logo-circle img { width: 100%; height: auto; }
+        .logo-circle img { width: 100%; height: 100%; object-fit: cover; }
 
         .hamburger { width: 30px; height: 20px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; }
         .hamburger span { width: 100%; height: 3px; background: var(--safari-green); border-radius: 5px; }
 
         .side-menu {
             position: fixed; right: -300px; top: 0; width: 280px; height: 100vh;
-            background: var(--safari-green); z-index: 1050; padding: 100px 30px;
-            display: flex; flex-direction: column; gap: 25px; transition: 0.5s;
+            background: white; z-index: 1050; padding: 100px 30px;
+            display: flex; flex-direction: column; gap: 25px; transition: 0.4s ease;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.15);
         }
         .side-menu.active { right: 0; }
-        .side-menu a { text-decoration: none; color: white; font-weight: 600; }
+        .side-menu a { text-decoration: none; color: var(--safari-green); font-weight: 600; font-size: 1.1rem; }
+
+        .overlay-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); opacity: 0; visibility: hidden;
+            z-index: 1040; transition: 0.3s;
+        }
+        .overlay-bg.active { opacity: 1; visibility: visible; }
 
         /* --- HERO SECTION --- */
         .contact-hero {
             position: relative; height: 40vh; margin-top: 80px;
-            display: flex; align-items: center; justify-content: center; overflow: hidden;
-        }
-        .hero-slider {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('assets/images/pic1.png');
             background-size: cover; background-position: center;
-            animation: backgroundCycle 12s infinite;
         }
-        @keyframes backgroundCycle {
-            0%, 100% { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1516422213484-2142495f0c29?auto=format&fit=crop&w=1200'); }
-            50% { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=1200')); }
+        .contact-hero h1 { 
+            font-family: 'Montserrat'; color: white; font-size: 2.2rem; 
+            text-transform: uppercase; letter-spacing: 2px; text-align: center; 
+            padding: 0 20px;
         }
-        .contact-hero h1 { font-family: 'Montserrat'; color: white; font-size: 2.5rem; text-transform: uppercase; letter-spacing: 3px; text-align: center; }
 
         /* --- ABOUT US SECTION --- */
         .about-brief { padding: 60px 8%; background: white; text-align: center; border-bottom: 5px solid var(--vibrant-yellow); }
         .about-brief h2 { font-family: 'Montserrat'; color: var(--safari-green); margin-bottom: 15px; }
         .about-brief p { max-width: 800px; margin: 0 auto; color: #555; font-size: 1.05rem; }
 
-        /* --- SMALL CLICKABLE CARDS --- */
-        .details-section { padding: 60px 5%; max-width: 1100px; margin: 0 auto; text-align: center; }
-        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        /* --- CONTACT CARDS --- */
+        .details-section { padding: 80px 5%; max-width: 1100px; margin: 0 auto; text-align: center; }
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
         
         .contact-card { 
-            background: white; padding: 30px 20px; border-radius: 20px; 
+            background: white; padding: 40px 20px; border-radius: 20px; 
             box-shadow: 0 10px 25px rgba(0,0,0,0.06); transition: 0.3s; 
             border: 1px solid #eee; text-decoration: none; color: inherit; display: block;
         }
-        .contact-card:hover { transform: translateY(-10px); border-color: var(--sunset-orange); background: var(--bone); }
-        .contact-card i { font-size: 2.2rem; color: var(--sunset-orange); margin-bottom: 15px; }
-        .contact-card h3 { font-family: 'Montserrat'; font-size: 1.1rem; color: var(--safari-green); margin-bottom: 8px; }
-        .contact-card p { font-size: 0.9rem; font-weight: 600; color: #666; }
+        .contact-card:hover { transform: translateY(-10px); border-color: var(--sunset-orange); }
+        .contact-card i { font-size: 2.5rem; color: var(--sunset-orange); margin-bottom: 20px; }
+        .contact-card h3 { font-family: 'Montserrat'; font-size: 1.2rem; color: var(--safari-green); margin-bottom: 10px; }
+        .contact-card p { font-size: 0.95rem; color: #666; font-weight: 500; }
 
         .cta-button {
             background: linear-gradient(135deg, #25D366, #128C7E); color: white;
-            padding: 15px 40px; border-radius: 50px; text-decoration: none;
-            font-weight: bold; display: inline-flex; align-items: center; gap: 10px; margin-top: 40px;
+            padding: 18px 45px; border-radius: 50px; text-decoration: none;
+            font-weight: bold; display: inline-flex; align-items: center; gap: 12px; margin-top: 50px;
+            transition: 0.3s; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);
         }
+        .cta-button:hover { transform: scale(1.05); box-shadow: 0 15px 25px rgba(37, 211, 102, 0.3); }
 
         /* --- FOOTER --- */
-        .master-footer { background: #111; color: white; padding: 60px 8% 30px; border-top: 8px solid var(--safari-green); }
-        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; }
-        .social-icon { width: 40px; height: 40px; border-radius: 10px; background: #222; display: inline-flex; align-items: center; justify-content: center; color: white; margin-right: 10px; text-decoration: none; transition: 0.3s; }
-        .social-icon:hover { background: var(--sunset-orange); transform: translateY(-5px); }
+        .master-footer { background: #1a1a1a; color: white; padding: 80px 8% 30px; position: relative; }
+        .master-footer::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 10px; background: linear-gradient(90deg, var(--sunset-orange), var(--safari-green), var(--sky-blue)); }
+        
+        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 50px; }
+        .footer-brand h2 { font-family: 'Montserrat'; font-size: 1.8rem; margin-bottom: 15px; color: white; }
+        .footer-brand p { color: #bbb; line-height: 1.8; }
+        
+        .footer-links h3 { font-family: 'Montserrat'; margin-bottom: 25px; position: relative; }
+        .footer-links h3::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 40px; height: 3px; background: var(--sunset-orange); }
 
-        .bottom-bar { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #333; font-size: 0.85rem; color: #777; }
-        .dev-credit a { color: var(--sunset-orange); text-decoration: none; font-weight: bold; }
-        
-         .pay-info {  
-        background: #eef7ff;  
-        border-left: 5px solid var(--sky-blue);  
-        padding: 15px;  
-        border-radius: 10px;  
-        margin: 15px 0;  
-    }  
-        
+        .contact-item { display: flex; align-items: center; gap: 15px; margin-bottom: 18px; text-decoration: none; color: #ddd; transition: 0.3s; }
+        .contact-item:hover { color: var(--sky-blue); padding-left: 5px; }
+        .contact-item i { color: var(--sunset-orange); }
+
+        .social-row { margin-top: 30px; display: flex; gap: 15px; }
+        .social-icon { width: 45px; height: 45px; border-radius: 12px; background: #333; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: 0.4s; border: 1px solid #444; }
+        .social-icon:hover { transform: translateY(-5px); background: var(--safari-green); border-color: var(--sunset-orange); }
+
+        .bottom-bar { text-align: center; margin-top: 60px; padding-top: 25px; border-top: 1px solid #333; font-size: 0.85rem; color: #777; }
+        .dev-credit a { color: var(--sunset-orange); text-decoration: none; }
     </style>
 </head>
 <body>
+
+<div class="overlay-bg" id="overlay" onclick="toggleMenu()"></div>
 
 <header class="header">
     <div class="logo-circle">
@@ -129,19 +141,19 @@
 
 <nav class="side-menu" id="sideMenu">
     <a href="index.html">Home</a>
-    <a href="index.html#active-trips">Trips</a>
+    <a href="index.html#active-trips" onclick="toggleMenu()">Upcoming Trips</a>
+    <a href="index.html#suggest" onclick="toggleMenu()">Custom Suggestions</a>
     <a href="contact.html">Contact Us</a>
 </nav>
 
 <section class="contact-hero">
-    <div class="hero-slider"></div>
-    <h1>Get In Touch with Dynamic Adventures & safaris</h1>
+    <h1>Get In Touch</h1>
 </section>
 
 <section class="about-brief">
     <h2>Our Story</h2>
     <p>
-        Founded in the heart of Kenya, <strong>Dynamic Adventures & Safaris</strong> is more than a travel agency. We are a team of passionate explorers dedicated to showing you the raw beauty of East Africa—from the snow-capped peaks of Mt. Kenya to the hidden gems of the Savannah. We specialize in eco-friendly trekking, authentic cultural immersions, and bespoke safari experiences.
+        Founded in the heart of Kenya, <strong>Dynamic Adventures & Safaris</strong> is more than a travel agency. We are a team of passionate explorers dedicated to showing you the raw beauty of East Africa—from the snow-capped peaks of Mt. Kenya to the hidden gems of the Savannah.
     </p>
 </section>
 
@@ -150,7 +162,7 @@
         <a href="mailto:dynamicadventuressafaris@gmail.com" class="contact-card">
             <i class="fas fa-envelope"></i>
             <h3>Email Us</h3>
-            <p>Click to send a mail</p>
+            <p>dynamicadventuressafaris@gmail.com</p>
         </a>
 
         <a href="tel:+254797954580" class="contact-card">
@@ -161,234 +173,63 @@
 
         <a href="https://wa.me/254797954580" class="contact-card">
             <i class="fab fa-whatsapp"></i>
-            <h3>Live Chat</h3>
-            <p>24/7 Support Desk</p>
+            <h3>WhatsApp</h3>
+            <p>Available 24/7</p>
         </a>
     </div>
 
     <a href="https://wa.me/254797954580" class="cta-button">
-        <i class="fab fa-whatsapp"></i> Book Your Safari Now
+        <i class="fab fa-whatsapp"></i> Start Planning Your Adventure
     </a>
 </section>
-
-
-<div class="modal" id="bookingModal">  
-    <div class="modal-content">  
-        <h3 id="modalTitle">Book Trip</h3>  
-        <div class="pay-info">  
-            <strong>Payment Details</strong><br><br>  
-            M-Pesa Paybill: <strong>400200</strong><br>  
-            Account: <strong>01100123456</strong><br><br>  
-            OR Send To: <strong>0746 348 267</strong>  
-        </div>  
-
-<style>
-    /* LIVELY FOOTER STYLES */
-    .master-footer {
-        background: #1a1a1a;
-        color: white;
-        padding: 80px 8% 30px;
-        position: relative;
-        overflow: hidden;
-    }
-
-    /* The "Wave" top border to make it less rigid */
-    .master-footer::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 10px;
-        background: linear-gradient(90deg, var(--sunset-orange), var(--safari-green), var(--sky-blue));
-    }
-
-    .footer-content {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 50px;
-        position: relative;
-        z-index: 2;
-    }
-
-    .footer-brand h2 {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 1.8rem;
-        margin-bottom: 15px;
-        background: linear-gradient(to right, #fff, var(--gray-fade));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .footer-brand p {
-        line-height: 1.8;
-        color: #bbb;
-        max-width: 400px;
-    }
-
-    .footer-links h3 {
-        font-family: 'Montserrat';
-        margin-bottom: 25px;
-        position: relative;
-        display: inline-block;
-    }
-
-    .footer-links h3::after {
-        content: '';
-        position: absolute;
-        bottom: -8px;
-        left: 0;
-        width: 40px;
-        height: 3px;
-        background: var(--sunset-orange);
-        border-radius: 2px;
-    }
-
-    .contact-item {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 18px;
-        text-decoration: none;
-        color: #ddd;
-        transition: 0.3s;
-    }
-
-    .contact-item:hover {
-        color: var(--sky-blue);
-        transform: translateX(8px);
-    }
-
-    .contact-item i {
-        font-size: 1.2rem;
-        color: var(--sunset-orange);
-    }
-
-    /* Energetic Social Icons */
-    .social-row {
-        margin-top: 30px;
-        display: flex;
-        gap: 15px;
-    }
-
-    .social-icon {
-        width: 45px;
-        height: 45px;
-        border-radius: 12px;
-        background: #333;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        text-decoration: none;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        border: 1px solid #444;
-    }
-
-    .social-icon:hover {
-        transform: translateY(-10px) rotate(8deg);
-        background: var(--safari-green);
-        border-color: var(--sunset-orange);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    }
-
-    .bottom-bar {
-        text-align: center;
-        margin-top: 60px;
-        padding-top: 25px;
-        border-top: 1px solid #333;
-        font-size: 0.85rem;
-        color: #777;
-        letter-spacing: 1px;
-    }
-
-    /* Quick Links list */
-    .footer-nav {
-        list-style: none;
-    }
-    .footer-nav li { margin-bottom: 12px; }
-    .footer-nav a { 
-        color: #bbb; 
-        text-decoration: none; 
-        transition: 0.3s; 
-    }
-    .footer-nav a:hover { color: white; padding-left: 5px; }
-
-</style>
-
 
 <footer class="master-footer">
     <div class="footer-content">
         <div class="footer-brand">
-            <h2>Dynamic Adventures & Safaris</h2>
-            <p>
-                Crafting unforgettable memories through authentic safari, 
-                high-altitude hiking, and serene beach escapes across 
-                the beautiful landscapes of East Africa.
-            </p>
+            <h2>Dynamic Adventures</h2>
+            <p>Crafting unforgettable memories through authentic safari, hiking, and beach escapes across East Africa.</p>
             <div class="social-row">
-                <a href="https://wa.me/254797954580" class="social-icon" title="WhatsApp">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-                <a href="#" class="social-icon" title="Instagram">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="#" class="social-icon" title="TikTok">
-                    <i class="fab fa-tiktok"></i>
-                </a>
-                <a href="#" class="social-icon" title="X (Twitter)">
-                    <i class="fab fa-x-twitter"></i>
-                </a>
+                <a href="https://wa.me/254797954580" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
             </div>
         </div>
 
         <div class="footer-links">
-            <h3>Quick Explore</h3>
-            <ul class="footer-nav">
-  
-                <li><a href="#">Travel Insurance Info</a></li>
-            </ul>
+            <h3>Quick Links</h3>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <a href="index.html" style="color: #bbb; text-decoration: none;">Home</a>
+                <a href="index.html#active-trips" style="color: #bbb; text-decoration: none;">Expeditions</a>
+                <a href="index.html#suggest" style="color: #bbb; text-decoration: none;">Custom Requests</a>
+            </div>
         </div>
 
         <div class="footer-links">
-            <h3>Get In Touch</h3>
-            
+            <h3>Reach Us</h3>
             <a href="tel:0746348267" class="contact-item">
                 <i class="fas fa-phone-alt"></i>
-                <span>0746 348 267 / 0797 954 580</span>
+                <span>0746 348 267</span>
             </a>
-<br>
             <a href="mailto:dynamicadventuressafaris@gmail.com" class="contact-item">
-                <i class="fas fa-envelope-open-text"></i>
-                <span>dynamicadventuressafaris@gmail.com</span>
+                <i class="fas fa-envelope"></i>
+                <span>Email Support</span>
             </a>
-<br>
-            <a href="https://wa.me/254797954580" class="contact-item">
-                <i class="fab fa-whatsapp-square"></i>
-                <span>24/7 WhatsApp Support</span>
-            </a>
-            <br>
-            <p style="font-size: 0.8rem; color: var(--gray-fade); margin-top: 10px;">
-                <i class="fas fa-map-marker-alt" style="color: var(--sunset-orange);"></i> 
-                Nairobi, Kenya - Global Operations
-            </p>
+            <p style="font-size: 0.85rem; color: var(--gray-fade);"><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</p>
         </div>
     </div>
 
     <div class="bottom-bar">
         &copy; 2026 DYNAMIC ADVENTURES & SAFARIS. ALL RIGHTS RESERVED.
-        <span class="dev-credit">
-            Site designed by 
-            <a href="https://wa.me/254790435584?text=Hallo%20developers%20Dan74tech%20am%20using%20the%20dynamic%20adventures%20and%20safaris%20web%20it%20is%20cool.">
-                Dan74tech Media
-            </a>
-        </span>
+        <div class="dev-credit" style="margin-top: 10px;">
+            Designed by <a href="https://wa.me/254790435584">Dan74tech Media</a>
+        </div>
     </div>
 </footer>
 
 <script>
     function toggleMenu() {
         document.getElementById('sideMenu').classList.toggle('active');
+        document.getElementById('overlay').classList.toggle('active');
     }
 </script>
 
