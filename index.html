@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Dynamic Adventures & Safaris | Official</title>  
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">  
+
+<style>  
+    :root {  
+        --safari-green: #2E4D32;  
+        --sunset-orange: #E67E22;  
+        --sky-blue: #5DADE2;  
+        --earth-black: #1A1A1A;  
+        --bone: #FDFCF0;  
+        --white: #FFFFFF;  
+        --gray-fade: #95a5a6;  
+    }  
+
+    * {  
+        margin: 0;  
+        padding: 0;  
+        box-sizing: border-box;  
+        font-family: 'Poppins', sans-serif;  
+        scroll-behavior: smooth;  
+    }  
+
+    body {  
+        background: var(--bone);  
+        color: var(--earth-black);  
+        overflow-x: hidden;  
+    }  
+
+    /* HEADER */  
+    .header {  
+        position: fixed;  
+        top: 0;  
+        width: 100%;  
+        z-index: 1000;  
+        background: rgba(255, 255, 255, 0.98);  
+        backdrop-filter: blur(10px);  
+        border-bottom: 3px solid var(--safari-green);  
+        padding: 10px 5%;  
+        display: flex;  
+        justify-content: space-between;  
+        align-items: center;  
+    }  
+
+    .logo-circle {  
+        width: 65px;  
+        height: 65px;  
+        border-radius: 50%;  
+        overflow: hidden;  
+        border: 2px solid var(--safari-green);  
+        background: white;  
+    }  
+
+    .logo-circle img {  
+        width: 100%;  
+        height: 100%;  
+        object-fit: cover;  
+    }  
+
+    /* MENU */  
+    .hamburger {  
+        width: 35px;  
+        height: 25px;  
+        display: flex;  
+        flex-direction: column;  
+        justify-content: space-between;  
+        cursor: pointer;  
+    }  
+
+    .hamburger span {  
+        width: 100%;  
+        height: 3px;  
+        background: var(--safari-green);  
+        border-radius: 5px;  
+    }  
+
+    .side-menu {  
+        position: fixed;  
+        right: -300px;  
+        top: 0;  
+        width: 280px;  
+        height: 100vh;  
+        background: white;  
+        z-index: 1050;  
+        padding: 100px 30px;  
+        display: flex;  
+        flex-direction: column;  
+        gap: 25px;  
+        transition: 0.4s ease;  
+        box-shadow: -5px 0 20px rgba(0,0,0,0.15);  
+    }  
+
+    .side-menu.active {  
+        right: 0;  
+    }  
+
+    .side-menu a {  
+        text-decoration: none;  
+        color: var(--safari-green);  
+        font-weight: 600;  
+        font-size: 1.05rem;  
+    }  
+
+    .overlay-bg {  
+        position: fixed;  
+        top: 0;  
+        left: 0;  
+        width: 100%;  
+        height: 100%;  
+        background: rgba(0,0,0,0.5);  
+        opacity: 0;  
+        visibility: hidden;  
+        z-index: 1040;  
+        transition: 0.3s;  
+    }  
+
+    .overlay-bg.active {  
+        opacity: 1;  
+        visibility: visible;  
+    }  
+
+    /* HERO */  
+    .hero {  
+        height: 40vh;  
+        background:  
+        linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.65)),  
+        url('assets/images/pic1.png');  /* Offline Hero Image */
+        background-size: cover;  
+        background-position: center;  
+        display: flex;  
+        flex-direction: column;  
+        justify-content: center;  
+        align-items: center;  
+        text-align: center;  
+        color: white;  
+        padding: 20px;  
+        margin-top: 85px; /* Offset for header */
+    }  
+
+    .hero h1 {  
+        font-size: 3rem;  
+        font-family: 'Montserrat';  
+        margin-bottom: 10px;  
+    }  
+
+    .hero p {  
+        font-size: 1.1rem;  
+        max-width: 700px;  
+    }  
+
+    /* SECTIONS */  
+    .section {  
+        padding: 70px 5%;  
+    }  
+
+    .section-title {  
+        border-left: 5px solid var(--sunset-orange);  
+        padding-left: 15px;  
+        margin-bottom: 35px;  
+        font-family: 'Montserrat';  
+        font-size: 2rem;  
+    }  
+
+    /* GRID */  
+    .grid {  
+        display: grid;  
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));  
+        gap: 30px;  
+    }  
+
+    /* CARD */  
+    .card {  
+        background: white;  
+        border-radius: 18px;  
+        overflow: hidden;  
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);  
+        transition: 0.4s;  
+        border-bottom: 4px solid var(--safari-green);  
+    }  
+
+    .card:hover {  
+        transform: translateY(-8px);  
+    }  
+
+    .card-body {  
+        padding: 22px;  
+    }  
+
+    .card-body h3 {  
+        margin-bottom: 10px;  
+    }  
+
+    /* PREMIUM IMAGE SLIDER */  
+    .slider-container {  
+        width: 100%;  
+        height: 240px;  
+        position: relative;  
+        overflow: hidden;  
+    }  
+
+    .slide {  
+        position: absolute;  
+        width: 100%;  
+        height: 100%;  
+        object-fit: cover;  
+        opacity: 0;  
+        transition: opacity 1s ease-in-out;  
+    }  
+
+    .slide.active {  
+        opacity: 1;  
+    }  
+
+    /* COUNTDOWN */  
+    .countdown {  
+        background: var(--earth-black);  
+        color: var(--sunset-orange);  
+        text-align: center;  
+        padding: 8px;  
+        font-size: 0.9rem;  
+        font-weight: 700;  
+    }  
+
+    /* INFO */  
+    .info-point {  
+        display: block;  
+        margin-bottom: 7px;  
+        font-size: 0.85rem;  
+        color: #555;  
+    }  
+
+    .info-point i {  
+        width: 22px;  
+        color: var(--sky-blue);  
+    }  
+
+    .req-list {  
+        background: #f9f8f2;  
+        padding: 12px;  
+        border-radius: 10px;  
+        margin: 12px 0;  
+        font-size: 0.83rem;  
+    }  
+
+    /* BUTTON */  
+    .btn-main {  
+        width: 100%;  
+        padding: 13px;  
+        border: none;  
+        border-radius: 10px;  
+        background: var(--safari-green);  
+        color: white;  
+        cursor: pointer;  
+        font-weight: 600;  
+        transition: 0.3s;  
+    }  
+
+    .btn-main:hover {  
+        background: var(--sunset-orange);  
+    }  
+
+    /* SUGGESTION */  
+    .suggestion-section {  
+        background: var(--safari-green);  
+        color: white;  
+        text-align: center;  
+        padding: 70px 10%;  
+    }  
+
+    .suggestion-box {  
+        max-width: 650px;  
+        margin: auto;  
+    }  
+
+    .suggestion-box input,  
+    .suggestion-box textarea {  
+        width: 100%;  
+        padding: 14px;  
+        border: none;  
+        border-radius: 10px;  
+        margin: 10px 0;  
+    }  
+
+    /* MODAL */  
+    .modal {  
+        display: none;  
+        position: fixed;  
+        top: 0;  
+        left: 0;  
+        width: 100%;  
+        height: 100%;  
+        background: rgba(0,0,0,0.75);  
+        z-index: 2000;  
+        justify-content: center;  
+        align-items: center;  
+    }  
+
+    .modal-content {  
+        background: white;  
+        width: 90%;  
+        max-width: 500px;  
+        border-radius: 18px;  
+        padding: 30px;  
+        max-height: 90vh;  
+        overflow-y: auto;  
+    }  
+
+    .pay-info {  
+        background: #eef7ff;  
+        border-left: 5px solid var(--sky-blue);  
+        padding: 15px;  
+        border-radius: 10px;  
+        margin: 15px 0;  
+    }  
+
+    /* FOOTER */  
+    .master-footer {  
+        background: var(--earth-black);  
+        color: white;  
+        padding: 60px 8% 20px;  
+    }  
+
+    .
+
+</style>
+</head>  
+<body>  
+
+<div class="overlay-bg" id="overlay" onclick="toggleMenu()"></div>  
+
+<header class="header">  
+    <div class="logo-circle">  
+        <img src="assets/images/logo.png"  
+        onerror="this.src='https://cdn-icons-png.flaticon.com/512/826/826070.png'">  
+    </div>  
+
+    <div class="hamburger" onclick="toggleMenu()">  
+        <span></span>  
+        <span></span>  
+        <span></span>  
+    </div>
+</header>  
+
+<nav class="side-menu" id="sideMenu">  
+    
+      <a href="index.html">Home</a>
+    <a href="#active-trips" onclick="toggleMenu()">Upcoming Trips</a>  
+    <a href="#suggest" onclick="toggleMenu()">Custom Suggestions</a>  
+    <a href="#past-trips" onclick="toggleMenu()">Past Adventures</a>  
+    
+    <a href="contact.html">Contact Us</a>
+</nav>
+
+</nav>  
+
+<section class="hero">  
+    <h1>  
+        Dynamic  
+        <span style="color:var(--sunset-orange);">  
+            Adventures Safaris  
+        </span>  
+    </h1>  
+    <p>  
+        Kenya's Premier Safari, Hiking, Beach and Luxury  
+        Adventure Experience.  
+    </p>
+</section>  
+
+<main class="section" id="active-trips">  
+    <h2 class="section-title">Upcoming Expeditions</h2>  
+    <div class="grid" id="active-container"></div>
+</main>  
+
+<section class="suggestion-section" id="suggest">  
+    <h2>Have A Dream Destination?</h2>  
+    <p>Suggest your next adventure and we shall organize it.</p>  
+    <div class="suggestion-box">  
+        <input type="text" id="sugName" placeholder="Your Name">  
+        <input type="text" id="sugPlace" placeholder="Destination">  
+        <textarea id="sugWhy" rows="4" placeholder="Why this place?"></textarea>  
+        <button class="btn-main" style="background:var(--sunset-orange);" onclick="sendSuggestion()">  
+            Send To WhatsApp  
+        </button>  
+    </div>
+</section>  
+
+<section class="section" id="past-trips">  
+    <h2 class="section-title">Expedition Archive</h2>  
+    <div class="grid" id="past-container"></div>
+</section>  
+
+<div class="modal" id="bookingModal">  
+    <div class="modal-content">  
+        <h3 id="modalTitle">Book Trip</h3>  
+        <div class="pay-info">  
+            <strong>Payment Details</strong><br><br>  
+            M-Pesa Paybill: <strong>400200</strong><br>  
+            Account: <strong>01100123456</strong><br><br>  
+            OR Send To: <strong>0746 348 267</strong>  
+        </div>  
+
+        <input type="text" id="bkName" placeholder="Full Name">  
+        <input type="text" id="bkLoc" placeholder="Current Location">  
+        <input type="text" id="bkPhone" placeholder="Phone Number">  
+        <select id="bkPick" style="width:100%;padding:13px;margin:10px 0;border-radius:10px;">  
+            <option value="">Select Pick-up Point</option>  
+        </select>  
+        <select id="bkAmount" style="width:100%;padding:13px;margin:10px 0;border-radius:10px;">  
+            <option value="Deposit">Commitment Deposit (KSh 2,000)</option>  
+            <option value="Full">Full Payment</option>  
+        </select>  
+
+        <p style="font-size:0.75rem;color:red;margin-bottom:15px;">  
+            *Attach your M-Pesa screenshot on WhatsApp after booking.  
+        </p>  
+        <button class="btn-main" onclick="confirmBooking()">Complete Via WhatsApp</button>  
+        <button class="btn-main" style="background:#ccc;margin-top:10px;color:black;" onclick="closeModal()">Cancel</button>  
+    </div>
+</div>  
+
+
+<style>
+    /* LIVELY FOOTER STYLES */
+    .master-footer {
+        background: #1a1a1a;
+        color: white;
+        padding: 80px 8% 30px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* The "Wave" top border to make it less rigid */
+    .master-footer::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 10px;
+        background: linear-gradient(90deg, var(--sunset-orange), var(--safari-green), var(--sky-blue));
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 50px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .footer-brand h2 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+        background: linear-gradient(to right, #fff, var(--gray-fade));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .footer-brand p {
+        line-height: 1.8;
+        color: #bbb;
+        max-width: 400px;
+    }
+
+    .footer-links h3 {
+        font-family: 'Montserrat';
+        margin-bottom: 25px;
+        position: relative;
+        display: inline-block;
+    }
+
+    .footer-links h3::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background: var(--sunset-orange);
+        border-radius: 2px;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 18px;
+        text-decoration: none;
+        color: #ddd;
+        transition: 0.3s;
+    }
+
+    .contact-item:hover {
+        color: var(--sky-blue);
+        transform: translateX(8px);
+    }
+
+    .contact-item i {
+        font-size: 1.2rem;
+        color: var(--sunset-orange);
+    }
+
+    /* Energetic Social Icons */
+    .social-row {
+        margin-top: 30px;
+        display: flex;
+        gap: 15px;
+    }
+
+    .social-icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 12px;
+        background: #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-decoration: none;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 1px solid #444;
+    }
+
+    .social-icon:hover {
+        transform: translateY(-10px) rotate(8deg);
+        background: var(--safari-green);
+        border-color: var(--sunset-orange);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    .bottom-bar {
+        text-align: center;
+        margin-top: 60px;
+        padding-top: 25px;
+        border-top: 1px solid #333;
+        font-size: 0.85rem;
+        color: #777;
+        letter-spacing: 1px;
+    }
+
+    /* Quick Links list */
+    .footer-nav {
+        list-style: none;
+    }
+    .footer-nav li { margin-bottom: 12px; }
+    .footer-nav a { 
+        color: #bbb; 
+        text-decoration: none; 
+        transition: 0.3s; 
+    }
+    .footer-nav a:hover { color: white; padding-left: 5px; }
+
+</style>
+
+<footer class="master-footer">
+    <div class="footer-content">
+        <div class="footer-brand">
+            <h2>Dynamic Adventures & Safaris</h2>
+            <p>
+                Crafting unforgettable memories through authentic safari, 
+                high-altitude hiking, and serene beach escapes across 
+                the beautiful landscapes of East Africa.
+            </p>
+            <div class="social-row">
+                <a href="https://wa.me/254797954580" class="social-icon" title="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="#" class="social-icon" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="social-icon" title="TikTok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="#" class="social-icon" title="X (Twitter)">
+                    <i class="fab fa-x-twitter"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-links">
+            <h3>Quick Explore</h3>
+            <ul class="footer-nav">
+                <li><a href="#active-trips">Upcoming Expeditions</a></li>
+                <li><a href="#past-trips">Adventure Archive</a></li>
+                <li><a href="#suggest">Custom Package Request</a></li>
+                <li><a href="#">Travel Insurance Info</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-links">
+            <h3>Get In Touch</h3>
+            
+            <a href="tel:0746348267" class="contact-item">
+                <i class="fas fa-phone-alt"></i>
+                <span>0746 348 267 / 0797 954 580</span>
+            </a>
+
+            <a href="mailto:dynamicadventuressafaris@gmail.com" class="contact-item">
+                <i class="fas fa-envelope-open-text"></i>
+                <span>dynamicadventuressafaris@gmail.com</span>
+            </a>
+
+            <a href="https://wa.me/254797954580" class="contact-item">
+                <i class="fab fa-whatsapp-square"></i>
+                <span>24/7 WhatsApp Support</span>
+            </a>
+            
+            <p style="font-size: 0.8rem; color: var(--gray-fade); margin-top: 10px;">
+                <i class="fas fa-map-marker-alt" style="color: var(--sunset-orange);"></i> 
+                Nairobi, Kenya - Global Operations
+            </p>
+        </div>
+    </div>
+
+    <div class="bottom-bar">
+        &copy; 2026 DYNAMIC ADVENTURES & SAFARIS. ALL RIGHTS RESERVED.
+        <span class="dev-credit">
+            Site designed by 
+            <a href="https://wa.me/254790435584?text=Hallo%20developers%20Dan74tech%20am%20using%20the%20dynamic%20adventures%20and%20safaris%20web%20it%20is%20cool.">
+                Dan74tech Media
+            </a>
+        </span>
+    </div>
+</footer>
+
+<script>  
+const WHATSAPP_NUM = "254797954580";  
+let currentBookingTrip = "";  
+  
+/* =========================  
+   ADMIN EDITABLE DATA 
+   (Update local src paths & yt links here)
+========================= */  
+const state = {  
+    active: [  
+        {  
+            title: "Maasai Mara Luxury Safari",  
+            date: "June 15, 2026",  
+            deadline: "June 10, 2026 23:59:59",  
+            price: "KSh 55,000",  
+            pickups: ["Kencom CBD", "TRM Mall", "Mlolongo"],  
+            reqs: ["National ID", "Warm Clothes", "Camera"],  
+            imgs: [  
+                "assets/images/pic2.png",  
+                "assets/images/pic3.png",  
+                "assets/images/pic4.png",  
+                "assets/images/pic5.png"  
+            ]  
+        },  
+        {  
+            title: "Mt Kenya Sirimon Trek",  
+            date: "July 02, 2026",  
+            deadline: "June 25, 2026 23:59:59",  
+            price: "KSh 12,500",  
+            pickups: ["Bata Hilton", "TRM", "Nanyuki"],  
+            reqs: ["Hiking Boots", "Poncho", "Heavy Jacket"],  
+            imgs: [  
+                "assets/images/pic6.png",  
+                "assets/images/pic7.png",  
+                "assets/images/pic8.png"  
+            ]  
+        },  
+        {  
+            title: "Diani Beach Escape",  
+            date: "August 11, 2026",  
+            deadline: "August 05, 2026 23:59:59",  
+            price: "KSh 28,000",  
+            pickups: ["JKIA", "Mombasa", "Nyali"],  
+            reqs: ["Beach Wear", "Sunscreen", "ID"],  
+            imgs: [  
+                "assets/images/pic9.png",  
+                "assets/images/pic10.png",  
+                "assets/images/pic11.png"  
+            ]  
+        },  
+        {  
+            title: "Amboseli Wildlife Tour",  
+            date: "September 08, 2026",  
+            deadline: "September 01, 2026 23:59:59",  
+            price: "KSh 18,500",  
+            pickups: ["Syokimau", "Kitengela", "Emali"],  
+            reqs: ["Camera", "Binoculars", "ID"],  
+            imgs: [  
+                "assets/images/pic12.png",  
+                "assets/images/pic13.png",  
+                "assets/images/pic14.png"  
+            ]  
+        },  
+        {  
+            title: "Watamu Marine Adventure",  
+            date: "October 21, 2026",  
+            deadline: "October 15, 2026 23:59:59",  
+            price: "KSh 35,000",  
+            pickups: ["Mombasa", "Malindi", "Watamu"],  
+            reqs: ["Swimming Wear", "Sunscreen", "Passport/ID"],  
+            imgs: [  
+                "assets/images/pic15.png",  
+                "assets/images/pic16.png",  
+                "assets/images/pic17.png"  
+            ]  
+        }  
+    ],  
+    past: [  
+        {  
+            title: "Diani Beach Vibes",  
+            date: "January 2026",  
+            yt: "https://youtube.com/watch?v=your_video_id",  
+            imgs: [  
+                "assets/images/pic18.png",  
+                "assets/images/pic19.png",  
+                "assets/images/pic20.png"  
+            ]  
+        },  
+        {  
+            title: "Hell's Gate Cycling",  
+            date: "March 2026",  
+            yt: "https://youtube.com/watch?v=your_video_id",  
+            imgs: [  
+                "assets/images/pic21.png",  
+                "assets/images/pic22.png",  
+                "assets/images/pic23.png"  
+            ]  
+        },  
+        {  
+            title: "Tsavo Red Elephant Safari",  
+            date: "April 2026",  
+            yt: "https://youtube.com/watch?v=your_video_id",  
+            imgs: [  
+                "assets/images/pic24.png",  
+                "assets/images/pic25.png",  
+                "assets/images/pic2.png"  
+            ]  
+        },  
+        {  
+            title: "Naivasha Camp Weekend",  
+            date: "May 2026",  
+            yt: "https://youtube.com/watch?v=your_video_id",  
+            imgs: [  
+                "assets/images/pic14.png",  
+                "assets/images/pic8.png",  
+                "assets/images/pic9.png"  
+            ]  
+        },  
+        {  
+            title: "Samburu Cultural Expedition",  
+            date: "June 2026",  
+            yt: "https://youtube.com/watch?v=your_video_id",  
+            imgs: [  
+                "assets/images/pic3.png",  
+                "assets/images/pic1.png",  
+                "assets/images/pic7.png"  
+            ]  
+        }  
+    ]  
+};  
+  
+/* MENU TOGGLE */  
+function toggleMenu() {  
+    document.getElementById('sideMenu').classList.toggle('active');  
+    document.getElementById('overlay').classList.toggle('active');  
+}  
+  
+/* RENDER CONTENT */  
+function render() {  
+    const activeCont = document.getElementById('active-container');  
+    
+    // Render Active Events
+    state.active.forEach((ev, idx) => {  
+        activeCont.innerHTML += `  
+        <div class="card">  
+            <div class="countdown" id="timer-${idx}">Loading...</div>  
+            <div class="slider-container">  
+                ${ev.imgs.map((img, i) => `
+                    <img src="${img}" class="slide ${i === 0 ? 'active' : ''}" data-event="${idx}">
+                `).join('')}  
+            </div>  
+            <div class="card-body">  
+                <h3>${ev.title}</h3>  
+                <span class="info-point"><i class="fas fa-calendar"></i> Event Date: ${ev.date}</span>  
+                <span class="info-point"><i class="fas fa-bus"></i> Pickups: ${ev.pickups.join(', ')}</span>  
+                <div class="req-list">  
+                    <strong>Requirements:</strong><br>  
+                    ${ev.reqs.map(r => `• ${r}`).join('<br>')}  
+                </div>  
+                <div style="font-size:1.2rem; font-weight:700; color:var(--safari-green); margin-bottom:15px;">  
+                    ${ev.price}  
+                </div>  
+                <button class="btn-main" onclick="openModal('${ev.title}', ${idx})">Book Now</button>  
+            </div>  
+        </div>  
+        `;  
+        startTimer(ev.deadline, `timer-${idx}`);  
+    });  
+  
+    // Render Past Events
+    const pastCont = document.getElementById('past-container');  
+    state.past.forEach((ev, idx) => {  
+        pastCont.innerHTML += `  
+        <div class="card">  
+            <div class="slider-container">  
+                ${ev.imgs.map((img, i) => `
+                    <img src="${img}" class="slide ${i === 0 ? 'active' : ''}" data-past="${idx}">
+                `).join('')}  
+            </div>  
+            <div class="card-body">  
+                <h3>${ev.title}</h3>  
+                <p style="margin-bottom:15px; font-size:0.85rem;">Completed: ${ev.date}</p>  
+                <a href="${ev.yt}" target="_blank" class="yt-link">  
+                    <i class="fab fa-youtube"></i> Watch Highlights  
+                </a>  
+            </div>  
+        </div>  
+        `;  
+    });  
+  
+    startSlides();  
+}  
+  
+/* IMAGE JUMP SLIDES (RESTORED FUNCTIONALITY) */  
+function startSlides() {  
+    const containers = document.querySelectorAll('.slider-container');  
+    containers.forEach(container => {  
+        const slides = container.querySelectorAll('.slide');  
+        if(slides.length <= 1) return;
+        
+        let currentIndex = 0;
+        setInterval(() => {
+            slides[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % slides.length;
+            slides[currentIndex].classList.add('active');
+        }, 3500); // Transitions every 3.5 seconds
+    });  
+}  
+
+/* COUNTDOWN TIMER LOGIC */
+function startTimer(deadline, elementId) {
+    const countDownDate = new Date(deadline).getTime();
+    const interval = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = countDownDate - now;
+        const el = document.getElementById(elementId);
+        
+        if (!el) { clearInterval(interval); return; }
+        
+        if (distance < 0) {
+            clearInterval(interval);
+            el.innerHTML = "BOOKING CLOSED";
+            el.style.color = "red";
+            return;
+        }
+        
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        
+        el.innerHTML = `Closes in: ${days}d ${hours}h ${minutes}m`;
+    }, 1000);
+}
+
+/* MODAL / BOOKING SYSTEM LOGIC */
+function openModal(title, index) {
+    currentBookingTrip = title;
+    document.getElementById('modalTitle').innerText = "Book: " + title;
+    
+    // Populate Pickups dynamically based on trip
+    const trip = state.active[index];
+    const pickSelect = document.getElementById('bkPick');
+    pickSelect.innerHTML = '<option value="">Select Pick-up Point</option>';
+    trip.pickups.forEach(p => {
+        pickSelect.innerHTML += `<option value="${p}">${p}</option>`;
+    });
+    
+    document.getElementById('bookingModal').style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('bookingModal').style.display = 'none';
+}
+
+function confirmBooking() {
+    const name = document.getElementById('bkName').value;
+    const loc = document.getElementById('bkLoc').value;
+    const phone = document.getElementById('bkPhone').value;
+    const pick = document.getElementById('bkPick').value;
+    const amount = document.getElementById('bkAmount').value;
+
+    if (!name || !phone || !pick) {
+        alert("Please fill out your Name, Phone Number, and Pick-up Point to proceed.");
+        return;
+    }
+
+    // Format WhatsApp message
+    const message = `*NEW BOOKING REQUEST*%0A%0A*Trip:* ${currentBookingTrip}%0A*Name:* ${name}%0A*Location:* ${loc}%0A*Phone:* ${phone}%0A*Pick-up:* ${pick}%0A*Payment Strategy:* ${amount}`;
+    window.open(`https://wa.me/${WHATSAPP_NUM}?text=${message}`, '_blank');
+    closeModal();
+}
+
+/* CUSTOM SUGGESTION LOGIC */
+function sendSuggestion() {
+    const name = document.getElementById('sugName').value;
+    const place = document.getElementById('sugPlace').value;
+    const why = document.getElementById('sugWhy').value;
+
+    if (!name || !place) {
+        alert("Please provide at least your name and dream destination.");
+        return;
+    }
+
+    const message = `*DREAM DESTINATION SUGGESTION*%0A%0A*From:* ${name}%0A*Destination:* ${place}%0A*Why:* ${why}`;
+    window.open(`https://wa.me/${WHATSAPP_NUM}?text=${message}`, '_blank');
+}
+
+// Initialize rendering on page load
+window.onload = render;
+
+</script>  
+</body>  
+</html>
+by
