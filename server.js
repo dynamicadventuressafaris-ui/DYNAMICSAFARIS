@@ -84,6 +84,43 @@ app.post('/api/admin/add-trip', upload.single('image'), async (req, res) => {
   }
 });
 
+
+// C. ADMIN API: Delete a Trip
+app.delete('/api/admin/trips/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await pool.query('DELETE FROM adventures WHERE id = $1', [id]);
+    res.json({ message: "Trip deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// D. ADMIN API: Update an Existing Trip
+app.put('/api/admin/trips/:id', upload.single('image'), async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, description, price, requirements, deadline, event_date } = req.body;
+    let query = `UPDATE adventures SET title=$1, description=$2, price=$3, requirements=$4, booking_deadline=$5, event_date=$6`;
+    let params = [title, description, price, requirements, deadline, event_date];
+
+    // If a new image was uploaded, update the image_url too
+    if (req.file) {
+      query += `, image_url=$7 WHERE id=$8`;
+      params.push(req.file.path, id);
+    } else {
+      query += ` WHERE id=$7`;
+      params.push(id);
+    }
+
+    const updatedTrip = await pool.query(query, params);
+    res.json({ message: "Trip updated successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 // --- 4. START SERVER ---
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => console.log(`Dynamic Adventures live on port ${PORT}`));
+
+
