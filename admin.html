@@ -20,16 +20,8 @@
         body { background-color: var(--bone); color: var(--earth-black); }
 
         /* --- LOGIN SCREEN --- */
-        #login-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--safari-green); z-index: 2000;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .login-card {
-            background: white; padding: 40px; border-radius: 20px;
-            width: 90%; max-width: 400px; text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
+        #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--safari-green); z-index: 2000; display: flex; align-items: center; justify-content: center; }
+        .login-card { background: white; padding: 40px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
         .login-card h2 { font-family: 'Montserrat'; color: var(--safari-green); margin-bottom: 20px; }
         .login-card input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; }
         .login-btn { background: var(--sunset-orange); color: white; width: 100%; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; }
@@ -38,22 +30,14 @@
         #admin-content { display: none; padding: 40px 5%; }
         header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
         
-        .form-container { 
-            background: white; padding: 30px; border-radius: 15px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px;
-            border-top: 5px solid var(--sunset-orange);
-        }
-        
+        .form-container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px; border-top: 5px solid var(--sunset-orange); }
         .grid-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
         .full-width { grid-column: 1 / -1; }
 
         label { display: block; font-weight: 600; margin-bottom: 5px; color: var(--safari-green); font-size: 0.9rem; }
-        input, textarea, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; }
         
-        .action-btn { 
-            background: var(--safari-green); color: white; padding: 15px 30px; 
-            border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s;
-        }
+        .action-btn { background: var(--safari-green); color: white; padding: 15px 30px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
         .action-btn:hover { opacity: 0.9; transform: translateY(-2px); }
         .cancel-btn { background: #95a5a6; margin-left: 10px; }
 
@@ -95,37 +79,19 @@
         <form id="tripForm" class="grid-form">
             <input type="hidden" id="editId">
             
-            <div>
-                <label>Adventure Name</label>
-                <input type="text" id="title" placeholder="e.g., Mt. Kenya Trek" required>
-            </div>
-            <div>
-                <label>Price (USD)</label>
-                <input type="number" id="price" placeholder="450.00" required>
-            </div>
-            <div>
-                <label>Booking Deadline</label>
-                <input type="datetime-local" id="deadline" required>
-            </div>
-            <div>
-                <label>Event Date</label>
-                <input type="datetime-local" id="event_date" required>
-            </div>
+            <div><label>Adventure Name</label><input type="text" id="title" placeholder="e.g., Mt. Kenya Trek" required></div>
+            <div><label>Price (KSh)</label><input type="number" id="price" placeholder="45000" required></div>
+            <div><label>Booking Deadline</label><input type="datetime-local" id="deadline" required></div>
+            <div><label>Event Date</label><input type="datetime-local" id="event_date" required></div>
             
-            <div class="full-width">
-                <label>Requirements (Comma separated)</label>
-                <input type="text" id="requirements" placeholder="Passport, Hiking Boots, 18+">
-            </div>
+            <div class="full-width"><label>Pick-up Points (Comma separated)</label><input type="text" id="pickups" placeholder="Kencom, TRM, Mlolongo" required></div>
+            <div class="full-width"><label>Requirements (Comma separated)</label><input type="text" id="requirements" placeholder="Passport, Hiking Boots, 18+"></div>
+            <div class="full-width"><label>Description</label><textarea id="description" rows="4" placeholder="Tell the story of this trip..."></textarea></div>
 
             <div class="full-width">
-                <label>Description</label>
-                <textarea id="description" rows="4" placeholder="Tell the story of this trip..."></textarea>
-            </div>
-
-            <div class="full-width">
-                <label>Cover Photo</label>
-                <input type="file" id="image" accept="image/*">
-                <p id="current-img-note" style="font-size: 0.8rem; color: #666; margin-top: 5px; display: none;">Keep empty to retain existing image</p>
+                <label>Upload Images (Select multiple)</label>
+                <input type="file" id="images" accept="image/*" multiple>
+                <p id="current-img-note" style="font-size: 0.8rem; color: #666; margin-top: 5px; display: none;">Keep empty to retain existing images</p>
             </div>
 
             <div class="full-width">
@@ -137,17 +103,8 @@
 
     <div class="table-wrapper">
         <table>
-            <thead>
-                <tr>
-                    <th>Adventure</th>
-                    <th>Price</th>
-                    <th>Status</th>
-                    <th>Dates</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="tripTableBody">
-                </tbody>
+            <thead><tr><th>Adventure</th><th>Price (KSh)</th><th>Status</th><th>Dates</th><th>Actions</th></tr></thead>
+            <tbody id="tripTableBody"></tbody>
         </table>
     </div>
 </div>
@@ -156,38 +113,29 @@
     const API_URL = 'https://dynamicsafaris-1.onrender.com/api';
 
     async function handleLogin() {
-    const email = document.getElementById('adminEmail').value;
-    const password = document.getElementById('adminPassword').value;
-    const errorMsg = document.getElementById('loginError');
+        const email = document.getElementById('adminEmail').value;
+        const password = document.getElementById('adminPassword').value;
+        const errorMsg = document.getElementById('loginError');
 
-    try {
-        const response = await fetch(`${API_URL}/admin/login`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-            // If the database confirms the user, show the dashboard
-            document.getElementById('login-overlay').style.display = 'none';
-            document.getElementById('admin-content').style.display = 'block';
-            loadTrips();
-        } else {
-            // Show the "Invalid Credentials" message
-            errorMsg.style.display = 'block';
-            errorMsg.innerText = "Invalid Email or Password";
+        try {
+            const response = await fetch(`${API_URL}/admin/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+            const data = await response.json();
+            if (data.success) {
+                document.getElementById('login-overlay').style.display = 'none';
+                document.getElementById('admin-content').style.display = 'block';
+                loadTrips();
+            } else {
+                errorMsg.style.display = 'block'; errorMsg.innerText = "Invalid Email or Password";
+            }
+        } catch (err) {
+            errorMsg.style.display = 'block'; errorMsg.innerText = "Connection error.";
         }
-    } catch (err) {
-        console.error("Login Error:", err);
-        errorMsg.style.display = 'block';
-        errorMsg.innerText = "Connection error. Is the server running?";
     }
-}
 
-
-    // 2. LOAD TRIPS
     async function loadTrips() {
         const res = await fetch(`${API_URL}/trips`);
         const trips = await res.json();
@@ -199,7 +147,7 @@
             tableBody.innerHTML += `
                 <tr>
                     <td><strong>${trip.title}</strong></td>
-                    <td>$${trip.price}</td>
+                    <td>KSh ${parseInt(trip.price).toLocaleString()}</td>
                     <td><span class="badge ${trip.status.toLowerCase()}">${trip.status}</span></td>
                     <td style="font-size: 0.85rem; color: #666;">Event: ${dateStr}</td>
                     <td>
@@ -211,7 +159,6 @@
         });
     }
 
-    // 3. PREPARE EDIT MODE
     function prepEdit(trip) {
         document.getElementById('form-title').innerText = "Edit Adventure";
         document.getElementById('submit-btn').innerText = "Update Adventure";
@@ -222,16 +169,16 @@
         document.getElementById('title').value = trip.title;
         document.getElementById('price').value = trip.price;
         document.getElementById('description').value = trip.description;
-        document.getElementById('requirements').value = Array.isArray(trip.requirements) ? trip.requirements.join(', ') : trip.requirements;
         
-        // Date formatting for datetime-local input
+        // Parse JSON strings back to comma separated lists
+        document.getElementById('requirements').value = (typeof trip.requirements === 'string' ? JSON.parse(trip.requirements || '[]') : trip.requirements || []).join(', ');
+        document.getElementById('pickups').value = (typeof trip.pickups === 'string' ? JSON.parse(trip.pickups || '[]') : trip.pickups || []).join(', ');
+        
         if(trip.booking_deadline) document.getElementById('deadline').value = new Date(trip.booking_deadline).toISOString().slice(0,16);
         if(trip.event_date) document.getElementById('event_date').value = new Date(trip.event_date).toISOString().slice(0,16);
-        
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // 4. RESET FORM
     function resetForm() {
         document.getElementById('tripForm').reset();
         document.getElementById('form-title').innerText = "Add New Adventure";
@@ -241,7 +188,6 @@
         document.getElementById('editId').value = "";
     }
 
-    // 5. SAVE OR UPDATE LOGIC
     document.getElementById('tripForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const editId = document.getElementById('editId').value;
@@ -252,23 +198,26 @@
         formData.append('title', document.getElementById('title').value);
         formData.append('price', document.getElementById('price').value);
         formData.append('description', document.getElementById('description').value);
-        formData.append('requirements', JSON.stringify(document.getElementById('requirements').value.split(',').map(s => s.trim())));
         formData.append('deadline', document.getElementById('deadline').value);
         formData.append('event_date', document.getElementById('event_date').value);
         
-        const imageFile = document.getElementById('image').files[0];
-        if(imageFile) formData.append('image', imageFile);
+        // Convert comma strings to JSON Arrays
+        formData.append('requirements', JSON.stringify(document.getElementById('requirements').value.split(',').map(s => s.trim())));
+        formData.append('pickups', JSON.stringify(document.getElementById('pickups').value.split(',').map(s => s.trim())));
+        
+        // Append Multiple Images
+        const files = document.getElementById('images').files;
+        for (let i = 0; i < files.length; i++) {
+            formData.append('images', files[i]);
+        }
 
         const res = await fetch(endpoint, { method: method, body: formData });
-
         if (res.ok) {
             alert(editId ? 'Adventure Updated!' : 'Adventure Added!');
-            resetForm();
-            loadTrips();
+            resetForm(); loadTrips();
         }
     });
 
-    // 6. DELETE LOGIC
     async function deleteTrip(id) {
         if(confirm("Permanently remove this expedition?")) {
             await fetch(`${API_URL}/admin/trips/${id}`, { method: 'DELETE' });
@@ -276,6 +225,5 @@
         }
     }
 </script>
-
 </body>
 </html>
