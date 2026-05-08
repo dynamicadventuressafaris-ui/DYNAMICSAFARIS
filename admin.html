@@ -155,20 +155,37 @@
 <script>
     const API_URL = 'https://dynamicsafaris-1.onrender.com/api';
 
-    // 1. SIMPLE LOGIN LOGIC (Matches Blueprint Admin Credentials)
-    function handleLogin() {
-        const email = document.getElementById('adminEmail').value;
-        const pass = document.getElementById('adminPassword').value;
-        
-        // In production, this should call your /api/admin/login route
-        if(email === "admin@dynamicsafaris.com" && pass === "Safari2026") {
+    async function handleLogin() {
+    const email = document.getElementById('adminEmail').value;
+    const password = document.getElementById('adminPassword').value;
+    const errorMsg = document.getElementById('loginError');
+
+    try {
+        const response = await fetch(`${API_URL}/admin/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            // If the database confirms the user, show the dashboard
             document.getElementById('login-overlay').style.display = 'none';
             document.getElementById('admin-content').style.display = 'block';
             loadTrips();
         } else {
-            document.getElementById('loginError').style.display = 'block';
+            // Show the "Invalid Credentials" message
+            errorMsg.style.display = 'block';
+            errorMsg.innerText = "Invalid Email or Password";
         }
+    } catch (err) {
+        console.error("Login Error:", err);
+        errorMsg.style.display = 'block';
+        errorMsg.innerText = "Connection error. Is the server running?";
     }
+}
+
 
     // 2. LOAD TRIPS
     async function loadTrips() {
