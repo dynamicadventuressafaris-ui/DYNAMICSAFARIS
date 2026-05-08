@@ -66,16 +66,18 @@ app.get('/api/trips', async (req, res) => {
   }
 });
 
-// B. ADMIN API: Create Trip
-app.post('/api/admin/add-trip', upload.single('image'), async (req, res) => {
+// B. ADMIN API: Create Trip (Multiple Images & Pickups)
+app.post('/api/admin/add-trip', upload.array('images', 5), async (req, res) => {
   try {
-    const { title, description, price, requirements, deadline, event_date } = req.body;
-    const imageUrl = req.file ? req.file.path : null;
+    const { title, description, price, requirements, pickups, deadline, event_date } = req.body;
+    
+    // Map Cloudinary URLs into a JSON array
+    const imageUrls = req.files ? JSON.stringify(req.files.map(file => file.path)) : '[]';
 
     const newTrip = await pool.query(
-      `INSERT INTO adventures (title, description, price, image_url, requirements, booking_deadline, event_date) 
-       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
-      [title, description, price, imageUrl, requirements, deadline, event_date]
+      `INSERT INTO adventures (title, description, price, image_url, requirements, pickups, booking_deadline, event_date) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
+      [title, description, price, imageUrls, requirements, pickups, deadline, event_date]
     );
 
     res.json(newTrip.rows[0]);
@@ -83,7 +85,6 @@ app.post('/api/admin/add-trip', upload.single('image'), async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
 
 // C. ADMIN API: Delete a Trip
 app.delete('/api/admin/trips/:id', async (req, res) => {
@@ -97,29 +98,32 @@ app.delete('/api/admin/trips/:id', async (req, res) => {
 });
 
 // D. ADMIN API: Update an Existing Trip
-app.put('/api/admin/trips/:id', upload.single('image'), async (req, res) => {
+app.put('/api/admin/trips/:id', upload.array('images', 5), async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, description, price, requirements, deadline, event_date } = req.body;
-    let query = `UPDATE adventures SET title=$1, description=$2, price=$3, requirements=$4, booking_deadline=$5, event_date=$6`;
-    let params = [title, description, price, requirements, deadline, event_date];
+    const { title, description, price, requirements, pickups, deadline, event_date } = req.body;
+    
+    let query = `UPDATE adventures SET title=$1, description=$2, price=$3, requirements=$4, pickups=$5, booking_deadline=$6, event_date=$7`;
+    let params = [title, description, price, requirements, pickups, deadline, event_date];
 
-    // If a new image was uploaded, update the image_url too
-    if (req.file) {
-      query += `, image_url=$7 WHERE id=$8`;
-      params.push(req.file.path, id);
+    // If new images were uploaded, update the image_url too
+    if (req.files && req.files.length > 0) {
+      const imageUrls = JSON.stringify(req.files.map(file => file.path));
+      query += `, image_url=$8 WHERE id=$9`;
+      params.push(imageUrls, id);
     } else {
-      query += ` WHERE id=$7`;
+      query += ` WHERE id=$8`;
       params.push(id);
     }
 
-    const updatedTrip = await pool.query(query, params);
+    await pool.query(query, params);
     res.json({ message: "Trip updated successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
-// --- ADMIN LOGIN ROUTE ---
+
+// E. ADMIN LOGIN ROUTE
 app.post('/api/admin/login', async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -142,10 +146,6 @@ app.post('/api/admin/login', async (req, res) => {
     }
 });
 
-
-
 // --- 4. START SERVER ---
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => console.log(`Dynamic Adventures live on port ${PORT}`));
-
-
