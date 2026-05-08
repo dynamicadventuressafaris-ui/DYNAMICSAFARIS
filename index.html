@@ -8,444 +8,82 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">  
 
 <style>  
-    :root {  
-        --safari-green: #2E4D32;  
-        --sunset-orange: #E67E22;  
-        --sky-blue: #5DADE2;  
-        --earth-black: #1A1A1A;  
-        --bone: #FDFCF0;  
-        --white: #FFFFFF;  
-        --gray-fade: #95a5a6;  
-    }  
+    :root { --safari-green: #2E4D32; --sunset-orange: #E67E22; --sky-blue: #5DADE2; --earth-black: #1A1A1A; --bone: #FDFCF0; --white: #FFFFFF; --gray-fade: #95a5a6; }  
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }  
+    body { background: var(--bone); color: var(--earth-black); overflow-x: hidden; }  
 
-    * {  
-        margin: 0;  
-        padding: 0;  
-        box-sizing: border-box;  
-        font-family: 'Poppins', sans-serif;  
-        scroll-behavior: smooth;  
-    }  
-
-    body {  
-        background: var(--bone);  
-        color: var(--earth-black);  
-        overflow-x: hidden;  
-    }  
-
-    /* HEADER */  
-    .header {  
-        position: fixed;  
-        top: 0;  
-        width: 100%;  
-        z-index: 1000;  
-        background: rgba(255, 255, 255, 0.98);  
-        backdrop-filter: blur(10px);  
-        border-bottom: 3px solid var(--safari-green);  
-        padding: 10px 5%;  
-        display: flex;  
-        justify-content: space-between;  
-        align-items: center;  
-    }  
-
-    .logo-circle {  
-        width: 65px;  
-        height: 65px;  
-        border-radius: 50%;  
-        overflow: hidden;  
-        border: 2px solid var(--safari-green);  
-        background: white;  
-    }  
-
-    .logo-circle img {  
-        width: 100%;  
-        height: 100%;  
-        object-fit: cover;  
-    }  
-
-    /* MENU */  
-    .hamburger {  
-        width: 35px;  
-        height: 25px;  
-        display: flex;  
-        flex-direction: column;  
-        justify-content: space-between;  
-        cursor: pointer;  
-    }  
-
-    .hamburger span {  
-        width: 100%;  
-        height: 3px;  
-        background: var(--safari-green);  
-        border-radius: 5px;  
-    }  
-
-    .side-menu {  
-        position: fixed;  
-        right: -300px;  
-        top: 0;  
-        width: 280px;  
-        height: 100vh;  
-        background: white;  
-        z-index: 1050;  
-        padding: 100px 30px;  
-        display: flex;  
-        flex-direction: column;  
-        gap: 25px;  
-        transition: 0.4s ease;  
-        box-shadow: -5px 0 20px rgba(0,0,0,0.15);  
-    }  
-
-    .side-menu.active {  
-        right: 0;  
-    }  
-
-    .side-menu a {  
-        text-decoration: none;  
-        color: var(--safari-green);  
-        font-weight: 600;  
-        font-size: 1.05rem;  
-    }  
-
-    .overlay-bg {  
-        position: fixed;  
-        top: 0;  
-        left: 0;  
-        width: 100%;  
-        height: 100%;  
-        background: rgba(0,0,0,0.5);  
-        opacity: 0;  
-        visibility: hidden;  
-        z-index: 1040;  
-        transition: 0.3s;  
-    }  
-
-    .overlay-bg.active {  
-        opacity: 1;  
-        visibility: visible;  
-    }  
+    /* HEADER & MENU */  
+    .header { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); border-bottom: 3px solid var(--safari-green); padding: 10px 5%; display: flex; justify-content: space-between; align-items: center; }  
+    .logo-circle { width: 65px; height: 65px; border-radius: 50%; overflow: hidden; border: 2px solid var(--safari-green); background: white; }  
+    .logo-circle img { width: 100%; height: 100%; object-fit: cover; }  
+    .hamburger { width: 35px; height: 25px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; }  
+    .hamburger span { width: 100%; height: 3px; background: var(--safari-green); border-radius: 5px; }  
+    .side-menu { position: fixed; right: -300px; top: 0; width: 280px; height: 100vh; background: white; z-index: 1050; padding: 100px 30px; display: flex; flex-direction: column; gap: 25px; transition: 0.4s ease; box-shadow: -5px 0 20px rgba(0,0,0,0.15); }  
+    .side-menu.active { right: 0; }  
+    .side-menu a { text-decoration: none; color: var(--safari-green); font-weight: 600; font-size: 1.05rem; }  
+    .overlay-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); opacity: 0; visibility: hidden; z-index: 1040; transition: 0.3s; }  
+    .overlay-bg.active { opacity: 1; visibility: visible; }  
 
     /* HERO */  
-    .hero {  
-        height: 40vh;  
-        background: linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.65)), url('assets/images/pic1.png');  
-        background-size: cover;  
-        background-position: center;  
-        display: flex;  
-        flex-direction: column;  
-        justify-content: center;  
-        align-items: center;  
-        text-align: center;  
-        color: white;  
-        padding: 20px;  
-        margin-top: 85px;  
-    }  
+    .hero { height: 40vh; background: linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.65)), url('assets/images/pic1.png'); background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding: 20px; margin-top: 85px; }  
+    .hero h1 { font-size: 3rem; font-family: 'Montserrat'; margin-bottom: 10px; }  
+    .hero p { font-size: 1.1rem; max-width: 700px; }  
 
-    .hero h1 {  
-        font-size: 3rem;  
-        font-family: 'Montserrat';  
-        margin-bottom: 10px;  
-    }  
-
-    .hero p {  
-        font-size: 1.1rem;  
-        max-width: 700px;  
-    }  
-
-    /* SECTIONS */  
-    .section {  
-        padding: 70px 5%;  
-    }  
-
-    .section-title {  
-        border-left: 5px solid var(--sunset-orange);  
-        padding-left: 15px;  
-        margin-bottom: 35px;  
-        font-family: 'Montserrat';  
-        font-size: 2rem;  
-    }  
-
-    /* GRID */  
-    .grid {  
-        display: grid;  
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));  
-        gap: 30px;  
-    }  
+    /* SECTIONS & GRID */  
+    .section { padding: 70px 5%; }  
+    .section-title { border-left: 5px solid var(--sunset-orange); padding-left: 15px; margin-bottom: 35px; font-family: 'Montserrat'; font-size: 2rem; }  
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }  
 
     /* CARD */  
-    .card {  
-        background: white;  
-        border-radius: 18px;  
-        overflow: hidden;  
-        box-shadow: 0 10px 30px rgba(0,0,0,0.08);  
-        transition: 0.4s;  
-        border-bottom: 4px solid var(--safari-green);  
-    }  
+    .card { background: white; border-radius: 18px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: 0.4s; border-bottom: 4px solid var(--safari-green); }  
+    .card:hover { transform: translateY(-8px); }  
+    .card-body { padding: 22px; }  
+    .card-body h3 { margin-bottom: 10px; }  
 
-    .card:hover {  
-        transform: translateY(-8px);  
-    }  
+    /* IMAGE SLIDER */  
+    .slider-container { width: 100%; height: 240px; position: relative; overflow: hidden; background: #eee; }  
+    .slide { position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out; }  
+    .slide.active { opacity: 1; }  
 
-    .card-body {  
-        padding: 22px;  
-    }  
-
-    .card-body h3 {  
-        margin-bottom: 10px;  
-    }  
-
-    /* PREMIUM IMAGE SLIDER */  
-    .slider-container {  
-        width: 100%;  
-        height: 240px;  
-        position: relative;  
-        overflow: hidden;  
-        background: #eee;
-    }  
-
-    .slide {  
-        position: absolute;  
-        width: 100%;  
-        height: 100%;  
-        object-fit: cover;  
-        opacity: 0;  
-        transition: opacity 1s ease-in-out;  
-    }  
-
-    .slide.active {  
-        opacity: 1;  
-    }  
-
-    /* COUNTDOWN */  
-    .countdown {  
-        background: var(--earth-black);  
-        color: var(--sunset-orange);  
-        text-align: center;  
-        padding: 8px;  
-        font-size: 0.9rem;  
-        font-weight: 700;  
-    }  
-
-    /* INFO */  
-    .info-point {  
-        display: block;  
-        margin-bottom: 7px;  
-        font-size: 0.85rem;  
-        color: #555;  
-    }  
-
-    .info-point i {  
-        width: 22px;  
-        color: var(--sky-blue);  
-    }  
-
-    .req-list {  
-        background: #f9f8f2;  
-        padding: 12px;  
-        border-radius: 10px;  
-        margin: 12px 0;  
-        font-size: 0.83rem;  
-    }  
+    /* CARD DETAILS */  
+    .countdown { background: var(--earth-black); color: var(--sunset-orange); text-align: center; padding: 8px; font-size: 0.9rem; font-weight: 700; }  
+    .info-point { display: block; margin-bottom: 7px; font-size: 0.85rem; color: #555; }  
+    .info-point i { width: 22px; color: var(--sky-blue); }  
+    .req-list { background: #f9f8f2; padding: 12px; border-radius: 10px; margin: 12px 0; font-size: 0.83rem; max-height: 120px; overflow-y: auto;}  
 
     /* BUTTONS */  
-    .btn-main {  
-        width: 100%;  
-        padding: 13px;  
-        border: none;  
-        border-radius: 10px;  
-        background: var(--safari-green);  
-        color: white;  
-        cursor: pointer;  
-        font-weight: 600;  
-        transition: 0.3s;  
-    }  
-
-    .btn-main:hover {  
-        background: var(--sunset-orange);  
-    }  
-
-    .yt-link {
-        text-decoration: none;
-        color: #c4302b;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
+    .btn-main { width: 100%; padding: 13px; border: none; border-radius: 10px; background: var(--safari-green); color: white; cursor: pointer; font-weight: 600; transition: 0.3s; }  
+    .btn-main:hover { background: var(--sunset-orange); }  
+    
     /* SUGGESTION SECTION */  
-    .suggestion-section {  
-        background: var(--safari-green);  
-        color: white;  
-        text-align: center;  
-        padding: 70px 10%;  
-    }  
-
-    .suggestion-box {  
-        max-width: 650px;  
-        margin: 30px auto 0;  
-    }  
-
-    .suggestion-box input,  
-    .suggestion-box textarea {  
-        width: 100%;  
-        padding: 14px;  
-        border: none;  
-        border-radius: 10px;  
-        margin: 10px 0;  
-        font-size: 1rem;
-    }  
+    .suggestion-section { background: var(--safari-green); color: white; text-align: center; padding: 70px 10%; }  
+    .suggestion-box { max-width: 650px; margin: 30px auto 0; }  
+    .suggestion-box input, .suggestion-box textarea { width: 100%; padding: 14px; border: none; border-radius: 10px; margin: 10px 0; font-size: 1rem; }  
 
     /* MODAL */  
-    .modal {  
-        display: none;  
-        position: fixed;  
-        top: 0;  
-        left: 0;  
-        width: 100%;  
-        height: 100%;  
-        background: rgba(0,0,0,0.75);  
-        z-index: 2000;  
-        justify-content: center;  
-        align-items: center;  
-    }  
-
-    .modal-content {  
-        background: white;  
-        width: 90%;  
-        max-width: 500px;  
-        border-radius: 18px;  
-        padding: 30px;  
-        max-height: 90vh;  
-        overflow-y: auto;  
-    }  
-
-    .pay-info {  
-        background: #eef7ff;  
-        border-left: 5px solid var(--sky-blue);  
-        padding: 15px;  
-        border-radius: 10px;  
-        margin: 15px 0;  
-    }  
-
-    .modal input {
-        width: 100%;
-        padding: 13px;
-        margin: 10px 0;
-        border-radius: 10px;
-        border: 1px solid #ddd;
-    }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 2000; justify-content: center; align-items: center; }  
+    .modal-content { background: white; width: 90%; max-width: 500px; border-radius: 18px; padding: 30px; max-height: 90vh; overflow-y: auto; }  
+    .pay-info { background: #eef7ff; border-left: 5px solid var(--sky-blue); padding: 15px; border-radius: 10px; margin: 15px 0; }  
+    .modal input, .modal select { width: 100%; padding: 13px; margin: 10px 0; border-radius: 10px; border: 1px solid #ddd; }  
 
     /* FOOTER */  
-    .master-footer {
-        background: #1a1a1a;
-        color: white;
-        padding: 80px 8% 30px;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .master-footer::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 10px;
-        background: linear-gradient(90deg, var(--sunset-orange), var(--safari-green), var(--sky-blue));
-    }
-
-    .footer-content {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 50px;
-        position: relative;
-        z-index: 2;
-    }
-
-    .footer-brand h2 {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 1.8rem;
-        margin-bottom: 15px;
-        color: var(--white);
-    }
-
-    .footer-brand p {
-        line-height: 1.8;
-        color: #bbb;
-        max-width: 400px;
-    }
-
-    .footer-links h3 {
-        font-family: 'Montserrat';
-        margin-bottom: 25px;
-        position: relative;
-    }
-
-    .footer-links h3::after {
-        content: '';
-        position: absolute;
-        bottom: -8px;
-        left: 0;
-        width: 40px;
-        height: 3px;
-        background: var(--sunset-orange);
-    }
-
-    .contact-item {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 18px;
-        text-decoration: none;
-        color: #ddd;
-        transition: 0.3s;
-    }
-
-    .contact-item:hover {
-        color: var(--sky-blue);
-        transform: translateX(8px);
-    }
-
-    .social-row {
-        margin-top: 30px;
-        display: flex;
-        gap: 15px;
-    }
-
-    .social-icon {
-        width: 45px;
-        height: 45px;
-        border-radius: 12px;
-        background: #333;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        text-decoration: none;
-        transition: 0.4s;
-        border: 1px solid #444;
-    }
-
-    .social-icon:hover {
-        transform: translateY(-5px);
-        background: var(--safari-green);
-        border-color: var(--sunset-orange);
-    }
-
-    .bottom-bar {
-        text-align: center;
-        margin-top: 60px;
-        padding-top: 25px;
-        border-top: 1px solid #333;
-        font-size: 0.85rem;
-        color: #777;
-    }
-
-    .footer-nav { list-style: none; }
-    .footer-nav li { margin-bottom: 12px; }
-    .footer-nav a { color: #bbb; text-decoration: none; transition: 0.3s; }
-    .footer-nav a:hover { color: white; padding-left: 5px; }
-
+    .master-footer { background: #1a1a1a; color: white; padding: 80px 8% 30px; position: relative; overflow: hidden; }  
+    .master-footer::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 10px; background: linear-gradient(90deg, var(--sunset-orange), var(--safari-green), var(--sky-blue)); }  
+    .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 50px; position: relative; z-index: 2; }  
+    .footer-brand h2 { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; margin-bottom: 15px; color: var(--white); }  
+    .footer-brand p { line-height: 1.8; color: #bbb; max-width: 400px; }  
+    .footer-links h3 { font-family: 'Montserrat'; margin-bottom: 25px; position: relative; }  
+    .footer-links h3::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 40px; height: 3px; background: var(--sunset-orange); }  
+    .contact-item { display: flex; align-items: center; gap: 15px; margin-bottom: 18px; text-decoration: none; color: #ddd; transition: 0.3s; }  
+    .contact-item:hover { color: var(--sky-blue); transform: translateX(8px); }  
+    .social-row { margin-top: 30px; display: flex; gap: 15px; }  
+    .social-icon { width: 45px; height: 45px; border-radius: 12px; background: #333; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: 0.4s; border: 1px solid #444; }  
+    .social-icon:hover { transform: translateY(-5px); background: var(--safari-green); border-color: var(--sunset-orange); }  
+    .bottom-bar { text-align: center; margin-top: 60px; padding-top: 25px; border-top: 1px solid #333; font-size: 0.85rem; color: #777; }  
+    .footer-nav { list-style: none; }  
+    .footer-nav li { margin-bottom: 12px; }  
+    .footer-nav a { color: #bbb; text-decoration: none; transition: 0.3s; }  
+    .footer-nav a:hover { color: white; padding-left: 5px; }  
 </style>
 </head>  
 <body>  
@@ -453,15 +91,8 @@
 <div class="overlay-bg" id="overlay" onclick="toggleMenu()"></div>  
 
 <header class="header">  
-    <div class="logo-circle">  
-        <img src="assets/images/logo.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/826/826070.png'">  
-    </div>  
-
-    <div class="hamburger" onclick="toggleMenu()">  
-        <span></span>  
-        <span></span>  
-        <span></span>  
-    </div>
+    <div class="logo-circle"><img src="assets/images/logo.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/826/826070.png'"></div>  
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
 </header>  
 
 <nav class="side-menu" id="sideMenu">  
@@ -479,7 +110,9 @@
 
 <main class="section" id="active-trips">  
     <h2 class="section-title">Upcoming Expeditions</h2>  
-    <div class="grid" id="active-container"></div>
+    <div class="grid" id="active-container">
+        <p>Loading adventures from database...</p>
+    </div>
 </main>  
 
 <section class="suggestion-section" id="suggest">  
@@ -489,9 +122,7 @@
         <input type="text" id="sugName" placeholder="Your Name">  
         <input type="text" id="sugPlace" placeholder="Destination">  
         <textarea id="sugWhy" rows="4" placeholder="Why this place?"></textarea>  
-        <button class="btn-main" style="background:var(--sunset-orange);" onclick="sendSuggestion()">  
-            Send To WhatsApp  
-        </button>  
+        <button class="btn-main" style="background:var(--sunset-orange);" onclick="sendSuggestion()">Send To WhatsApp</button>  
     </div>
 </section>  
 
@@ -513,17 +144,13 @@
         <input type="text" id="bkName" placeholder="Full Name">  
         <input type="text" id="bkLoc" placeholder="Current Location">  
         <input type="text" id="bkPhone" placeholder="Phone Number">  
-        <select id="bkPick" style="width:100%;padding:13px;margin:10px 0;border-radius:10px;">  
-            <option value="">Select Pick-up Point</option>  
-        </select>  
-        <select id="bkAmount" style="width:100%;padding:13px;margin:10px 0;border-radius:10px;">  
+        <select id="bkPick"><option value="">Select Pick-up Point</option></select>  
+        <select id="bkAmount">  
             <option value="Deposit">Commitment Deposit (KSh 2,000)</option>  
             <option value="Full">Full Payment</option>  
         </select>  
 
-        <p style="font-size:0.75rem;color:red;margin-bottom:15px;">  
-            *Attach your M-Pesa screenshot on WhatsApp after booking.  
-        </p>  
+        <p style="font-size:0.75rem;color:red;margin-bottom:15px;">*Attach your M-Pesa screenshot on WhatsApp after booking.</p>  
         <button class="btn-main" onclick="confirmBooking()">Complete Via WhatsApp</button>  
         <button class="btn-main" style="background:#ccc;margin-top:10px;color:black;" onclick="closeModal()">Cancel</button>  
     </div>
@@ -558,88 +185,95 @@
             <p><i class="fas fa-map-marker-alt" style="color:var(--sunset-orange)"></i> Nairobi, Kenya</p>
         </div>
     </div>
-
-    <div class="bottom-bar">
-        &copy; 2026 DYNAMIC ADVENTURES & SAFARIS. ALL RIGHTS RESERVED.
-    </div>
+    <div class="bottom-bar">&copy; 2026 DYNAMIC ADVENTURES & SAFARIS. ALL RIGHTS RESERVED.</div>
 </footer>
 
 <script>  
 const WHATSAPP_NUM = "254797954580";  
+const API_URL = 'https://dynamicsafaris-1.onrender.com/api';
 let currentBookingTrip = "";  
-  
-const state = {  
-    active: [  
-        {  
-            title: "Maasai Mara Luxury Safari",  
-            date: "June 15, 2026",  
-            deadline: "June 10, 2026 23:59:59",  
-            price: "KSh 55,000",  
-            pickups: ["Kencom CBD", "TRM Mall", "Mlolongo"],  
-            reqs: ["National ID", "Warm Clothes", "Camera"],  
-            imgs: ["assets/images/pic2.png", "assets/images/pic3.png", "assets/images/pic4.png"]  
-        },  
-        {  
-            title: "Mt Kenya Sirimon Trek",  
-            date: "July 02, 2026",  
-            deadline: "June 25, 2026 23:59:59",  
-            price: "KSh 12,500",  
-            pickups: ["Bata Hilton", "TRM", "Nanyuki"],  
-            reqs: ["Hiking Boots", "Poncho", "Heavy Jacket"],  
-            imgs: ["assets/images/pic6.png", "assets/images/pic7.png", "assets/images/pic8.png"]  
-        }
-    ],  
-    past: [  
-        {  
-            title: "Diani Beach Vibes",  
-            date: "January 2026",  
-            yt: "https://youtube.com/watch?v=your_video_id",  
-            imgs: ["assets/images/pic18.png", "assets/images/pic19.png"]  
-        }
-    ]  
-};  
+let globalActiveTrips = []; // Used to store pick-up points for the modal
   
 function toggleMenu() {  
     document.getElementById('sideMenu').classList.toggle('active');  
     document.getElementById('overlay').classList.toggle('active');  
 }  
   
-function render() {  
-    const activeCont = document.getElementById('active-container');  
-    state.active.forEach((ev, idx) => {  
-        activeCont.innerHTML += `  
-        <div class="card">  
-            <div class="countdown" id="timer-${idx}">Loading...</div>  
-            <div class="slider-container">  
-                ${ev.imgs.map((img, i) => `<img src="${img}" class="slide ${i === 0 ? 'active' : ''}">`).join('')}  
-            </div>  
-            <div class="card-body">  
-                <h3>${ev.title}</h3>  
-                <span class="info-point"><i class="fas fa-calendar"></i> ${ev.date}</span>  
-                <span class="info-point"><i class="fas fa-bus"></i> ${ev.pickups.join(', ')}</span>  
-                <div class="req-list"><strong>Requirements:</strong><br>${ev.reqs.map(r => `• ${r}`).join('<br>')}</div>  
-                <div style="font-size:1.2rem; font-weight:700; color:var(--safari-green); margin-bottom:15px;">${ev.price}</div>  
-                <button class="btn-main" onclick="openModal('${ev.title}', ${idx})">Book Now</button>  
-            </div>  
-        </div>`;  
-        startTimer(ev.deadline, `timer-${idx}`);  
-    });  
+async function fetchAndRenderTrips() {  
+    try {
+        const response = await fetch(`${API_URL}/trips`);
+        const trips = await response.json();
+        
+        const activeCont = document.getElementById('active-container');  
+        const pastCont = document.getElementById('past-container');
+        activeCont.innerHTML = '';
+        pastCont.innerHTML = '';
+        globalActiveTrips = [];
 
-    const pastCont = document.getElementById('past-container');  
-    state.past.forEach((ev) => {  
-        pastCont.innerHTML += `  
-        <div class="card">  
-            <div class="slider-container">  
-                ${ev.imgs.map((img, i) => `<img src="${img}" class="slide ${i === 0 ? 'active' : ''}">`).join('')}  
-            </div>  
-            <div class="card-body">  
-                <h3>${ev.title}</h3>  
-                <p style="margin-bottom:15px; font-size:0.85rem;">Completed: ${ev.date}</p>  
-                <a href="${ev.yt}" target="_blank" class="yt-link"><i class="fab fa-youtube"></i> Watch Highlights</a>  
-            </div>  
-        </div>`;  
-    });  
-    startSlides();  
+        trips.forEach((ev) => {
+            // Parse Database JSON strings into Arrays
+            let reqs = [];
+            let pickups = [];
+            let imgs = ['assets/images/logo.png']; // Fallback image
+
+            try { reqs = typeof ev.requirements === 'string' ? JSON.parse(ev.requirements || '[]') : (ev.requirements || []); } catch(e){}
+            try { pickups = typeof ev.pickups === 'string' ? JSON.parse(ev.pickups || '[]') : (ev.pickups || []); } catch(e){}
+            try { 
+                if(typeof ev.image_url === 'string' && ev.image_url.startsWith('[')) {
+                    imgs = JSON.parse(ev.image_url);
+                } else if(ev.image_url) {
+                    imgs = [ev.image_url];
+                }
+            } catch(e){}
+
+            // Format Date & Price
+            const dateStr = new Date(ev.event_date).toLocaleDateString();
+            const priceStr = `KSh ${parseInt(ev.price).toLocaleString()}`;
+
+            if (ev.status !== 'Archive') {
+                globalActiveTrips.push({ ...ev, pickups });
+                const currentIdx = globalActiveTrips.length - 1;
+
+                activeCont.innerHTML += `  
+                <div class="card">  
+                    <div class="countdown" id="timer-${ev.id}">Loading...</div>  
+                    <div class="slider-container">  
+                        ${imgs.map((img, i) => `<img src="${img}" class="slide ${i === 0 ? 'active' : ''}">`).join('')}  
+                    </div>  
+                    <div class="card-body">  
+                        <h3>${ev.title}</h3>  
+                        <p style="font-size: 0.9rem; color: #555; margin-bottom: 10px;">${ev.description}</p>
+                        <span class="info-point"><i class="fas fa-calendar"></i> ${dateStr}</span>  
+                        <span class="info-point"><i class="fas fa-bus"></i> ${pickups.join(', ') || 'Self-Drive'}</span>  
+                        <div class="req-list"><strong>Requirements:</strong><br>${reqs.map(r => `• ${r}`).join('<br>')}</div>  
+                        <div style="font-size:1.2rem; font-weight:700; color:var(--safari-green); margin-bottom:15px;">${priceStr}</div>  
+                        <button class="btn-main" onclick="openModal('${ev.title}', ${currentIdx})">Book Now</button>  
+                    </div>  
+                </div>`;  
+                startTimer(ev.booking_deadline, `timer-${ev.id}`);  
+            } else {
+                pastCont.innerHTML += `  
+                <div class="card">  
+                    <div class="slider-container">  
+                        ${imgs.map((img, i) => `<img src="${img}" class="slide ${i === 0 ? 'active' : ''}">`).join('')}  
+                    </div>  
+                    <div class="card-body">  
+                        <h3>${ev.title}</h3>  
+                        <p style="margin-bottom:15px; font-size:0.85rem;">Completed: ${dateStr}</p>  
+                        <p style="font-size: 0.9rem; color: #666;">${ev.description}</p>
+                    </div>  
+                </div>`;  
+            }
+        });
+        startSlides();  
+
+        if (globalActiveTrips.length === 0) activeCont.innerHTML = "<p>No upcoming adventures currently available. Check back soon!</p>";
+        if (pastCont.innerHTML === '') pastCont.innerHTML = "<p>Archive is empty.</p>";
+
+    } catch (error) {
+        console.error("Error fetching trips:", error);
+        document.getElementById('active-container').innerHTML = "<p style='color:red;'>Failed to load adventures. Please try again later.</p>";
+    }
 }  
   
 function startSlides() {  
@@ -670,12 +304,18 @@ function startTimer(deadline, elementId) {
     }, 1000);
 }
 
-function openModal(title, index) {
+function openModal(title, idx) {
     currentBookingTrip = title;
     document.getElementById('modalTitle').innerText = "Book: " + title;
     const pickSelect = document.getElementById('bkPick');
     pickSelect.innerHTML = '<option value="">Select Pick-up Point</option>';
-    state.active[index].pickups.forEach(p => pickSelect.innerHTML += `<option value="${p}">${p}</option>`);
+    
+    // Load dynamic pick-up points
+    const trip = globalActiveTrips[idx];
+    if(trip && trip.pickups) {
+        trip.pickups.forEach(p => pickSelect.innerHTML += `<option value="${p}">${p}</option>`);
+    }
+    
     document.getElementById('bookingModal').style.display = 'flex';
 }
 
@@ -684,8 +324,11 @@ function closeModal() { document.getElementById('bookingModal').style.display = 
 function confirmBooking() {
     const name = document.getElementById('bkName').value;
     const phone = document.getElementById('bkPhone').value;
-    if (!name || !phone) { alert("Please fill Name and Phone."); return; }
-    const msg = `*NEW BOOKING*%0A*Trip:* ${currentBookingTrip}%0A*Name:* ${name}%0A*Phone:* ${phone}`;
+    const loc = document.getElementById('bkLoc').value;
+    const pick = document.getElementById('bkPick').value;
+    if (!name || !phone || !pick) { alert("Please fill Name, Phone and Pick-up point."); return; }
+    
+    const msg = `*NEW BOOKING*%0A*Trip:* ${currentBookingTrip}%0A*Name:* ${name}%0A*Phone:* ${phone}%0A*Location:* ${loc}%0A*Pick-up:* ${pick}`;
     window.open(`https://wa.me/${WHATSAPP_NUM}?text=${msg}`, '_blank');
     closeModal();
 }
@@ -698,7 +341,7 @@ function sendSuggestion() {
     window.open(`https://wa.me/${WHATSAPP_NUM}?text=${msg}`, '_blank');
 }
 
-window.onload = render;
+window.onload = fetchAndRenderTrips;
 </script>  
 </body>  
 </html>
