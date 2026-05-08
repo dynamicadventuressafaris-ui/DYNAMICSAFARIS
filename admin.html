@@ -2,53 +2,175 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard | Dynamic Adventures</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal | Dynamic Adventures & Safaris</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        body { font-family: 'Poppins', sans-serif; background: #f4f7f6; padding: 40px; }
-        .container { max-width: 1000px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        h2 { color: #2E4D32; border-bottom: 2px solid #E67E22; padding-bottom: 10px; }
-        form { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 40px; }
-        input, textarea { padding: 12px; border: 1px solid #ddd; border-radius: 6px; width: 100%; }
-        .full-width { grid-column: span 2; }
-        button { background: #2E4D32; color: white; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
-        button.delete { background: #e74c3c; padding: 5px 10px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #eee; }
+        :root {
+            --safari-green: #2E4D32;
+            --sunset-orange: #E67E22;
+            --bone: #FDFCF0;
+            --earth-black: #1A1A1A;
+            --white: #FFFFFF;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--bone); color: var(--earth-black); }
+
+        /* --- LOGIN SCREEN --- */
+        #login-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--safari-green); z-index: 2000;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .login-card {
+            background: white; padding: 40px; border-radius: 20px;
+            width: 90%; max-width: 400px; text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .login-card h2 { font-family: 'Montserrat'; color: var(--safari-green); margin-bottom: 20px; }
+        .login-card input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; }
+        .login-btn { background: var(--sunset-orange); color: white; width: 100%; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+
+        /* --- DASHBOARD LAYOUT --- */
+        #admin-content { display: none; padding: 40px 5%; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        
+        .form-container { 
+            background: white; padding: 30px; border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px;
+            border-top: 5px solid var(--sunset-orange);
+        }
+        
+        .grid-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .full-width { grid-column: 1 / -1; }
+
+        label { display: block; font-weight: 600; margin-bottom: 5px; color: var(--safari-green); font-size: 0.9rem; }
+        input, textarea, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; }
+        
+        .action-btn { 
+            background: var(--safari-green); color: white; padding: 15px 30px; 
+            border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s;
+        }
+        .action-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .cancel-btn { background: #95a5a6; margin-left: 10px; }
+
+        /* --- TABLE STYLES --- */
+        .table-wrapper { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: var(--safari-green); color: white; padding: 15px; text-align: left; }
+        td { padding: 15px; border-bottom: 1px solid #eee; }
+        
+        .badge { padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
+        .open { background: #e8f5e9; color: #2e7d32; }
+        .closed { background: #fff3e0; color: #ef6c00; }
+        .archive { background: #eceff1; color: #455a64; }
+
+        .btn-edit { color: var(--sky-blue); cursor: pointer; margin-right: 15px; border: none; background: none; font-size: 1.1rem; }
+        .btn-delete { color: #e74c3c; cursor: pointer; border: none; background: none; font-size: 1.1rem; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>Add New Expedition</h2>
-    <form id="tripForm">
-        <input type="text" id="title" placeholder="Trip Title" required>
-        <input type="number" id="price" placeholder="Price (USD)" required>
-        <textarea id="description" class="full-width" placeholder="Describe the adventure..."></textarea>
-        <input type="datetime-local" id="deadline" title="Booking Deadline">
-        <input type="datetime-local" id="event_date" title="Event Date">
-        <input type="file" id="image" class="full-width">
-        <button type="submit" class="full-width">🚀 Upload to Live Site</button>
-    </form>
+<div id="login-overlay">
+    <div class="login-card">
+        <h2>Admin Access</h2>
+        <input type="email" id="adminEmail" placeholder="Email Address">
+        <input type="password" id="adminPassword" placeholder="Password">
+        <button class="login-btn" onclick="handleLogin()">Sign In</button>
+        <p id="loginError" style="color: red; font-size: 0.8rem; margin-top: 10px; display: none;">Invalid Credentials</p>
+    </div>
+</div>
 
-    <h2>Manage Active Trips</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Trip Name</th>
-                <th>Status</th>
-                <th>Price</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="tripTableBody">
-            </tbody>
-    </table>
+<div id="admin-content">
+    <header>
+        <h1>Management Dashboard</h1>
+        <button class="action-btn" style="background: #e74c3c; padding: 8px 15px;" onclick="location.reload()">Logout</button>
+    </header>
+
+    <div class="form-container">
+        <h2 id="form-title" style="margin-bottom: 20px; color: var(--safari-green);">Add New Adventure</h2>
+        <form id="tripForm" class="grid-form">
+            <input type="hidden" id="editId">
+            
+            <div>
+                <label>Adventure Name</label>
+                <input type="text" id="title" placeholder="e.g., Mt. Kenya Trek" required>
+            </div>
+            <div>
+                <label>Price (USD)</label>
+                <input type="number" id="price" placeholder="450.00" required>
+            </div>
+            <div>
+                <label>Booking Deadline</label>
+                <input type="datetime-local" id="deadline" required>
+            </div>
+            <div>
+                <label>Event Date</label>
+                <input type="datetime-local" id="event_date" required>
+            </div>
+            
+            <div class="full-width">
+                <label>Requirements (Comma separated)</label>
+                <input type="text" id="requirements" placeholder="Passport, Hiking Boots, 18+">
+            </div>
+
+            <div class="full-width">
+                <label>Description</label>
+                <textarea id="description" rows="4" placeholder="Tell the story of this trip..."></textarea>
+            </div>
+
+            <div class="full-width">
+                <label>Cover Photo</label>
+                <input type="file" id="image" accept="image/*">
+                <p id="current-img-note" style="font-size: 0.8rem; color: #666; margin-top: 5px; display: none;">Keep empty to retain existing image</p>
+            </div>
+
+            <div class="full-width">
+                <button type="submit" id="submit-btn" class="action-btn">🚀 Save Adventure</button>
+                <button type="button" id="cancel-edit" class="action-btn cancel-btn" style="display: none;" onclick="resetForm()">Cancel Edit</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Adventure</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Dates</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="tripTableBody">
+                </tbody>
+        </table>
+    </div>
 </div>
 
 <script>
     const API_URL = 'https://dynamicsafaris-1.onrender.com/api';
 
-    // 1. Fetch and Display Trips
+    // 1. SIMPLE LOGIN LOGIC (Matches Blueprint Admin Credentials)
+    function handleLogin() {
+        const email = document.getElementById('adminEmail').value;
+        const pass = document.getElementById('adminPassword').value;
+        
+        // In production, this should call your /api/admin/login route
+        if(email === "admin@dynamicsafaris.com" && pass === "Safari2026") {
+            document.getElementById('login-overlay').style.display = 'none';
+            document.getElementById('admin-content').style.display = 'block';
+            loadTrips();
+        } else {
+            document.getElementById('loginError').style.display = 'block';
+        }
+    }
+
+    // 2. LOAD TRIPS
     async function loadTrips() {
         const res = await fetch(`${API_URL}/trips`);
         const trips = await res.json();
@@ -56,50 +178,87 @@
         tableBody.innerHTML = '';
 
         trips.forEach(trip => {
+            const dateStr = new Date(trip.event_date).toLocaleDateString();
             tableBody.innerHTML += `
                 <tr>
                     <td><strong>${trip.title}</strong></td>
-                    <td>${trip.status}</td>
                     <td>$${trip.price}</td>
+                    <td><span class="badge ${trip.status.toLowerCase()}">${trip.status}</span></td>
+                    <td style="font-size: 0.85rem; color: #666;">Event: ${dateStr}</td>
                     <td>
-                        <button class="delete" onclick="deleteTrip('${trip.id}')">Delete</button>
+                        <button class="btn-edit" onclick='prepEdit(${JSON.stringify(trip)})'><i class="fas fa-edit"></i></button>
+                        <button class="btn-delete" onclick="deleteTrip('${trip.id}')"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>
             `;
         });
     }
 
-    // 2. Add New Trip Logic
+    // 3. PREPARE EDIT MODE
+    function prepEdit(trip) {
+        document.getElementById('form-title').innerText = "Edit Adventure";
+        document.getElementById('submit-btn').innerText = "Update Adventure";
+        document.getElementById('cancel-edit').style.display = "inline-block";
+        document.getElementById('current-img-note').style.display = "block";
+        
+        document.getElementById('editId').value = trip.id;
+        document.getElementById('title').value = trip.title;
+        document.getElementById('price').value = trip.price;
+        document.getElementById('description').value = trip.description;
+        document.getElementById('requirements').value = Array.isArray(trip.requirements) ? trip.requirements.join(', ') : trip.requirements;
+        
+        // Date formatting for datetime-local input
+        if(trip.booking_deadline) document.getElementById('deadline').value = new Date(trip.booking_deadline).toISOString().slice(0,16);
+        if(trip.event_date) document.getElementById('event_date').value = new Date(trip.event_date).toISOString().slice(0,16);
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 4. RESET FORM
+    function resetForm() {
+        document.getElementById('tripForm').reset();
+        document.getElementById('form-title').innerText = "Add New Adventure";
+        document.getElementById('submit-btn').innerText = "🚀 Save Adventure";
+        document.getElementById('cancel-edit').style.display = "none";
+        document.getElementById('current-img-note').style.display = "none";
+        document.getElementById('editId').value = "";
+    }
+
+    // 5. SAVE OR UPDATE LOGIC
     document.getElementById('tripForm').addEventListener('submit', async (e) => {
         e.preventDefault();
+        const editId = document.getElementById('editId').value;
+        const method = editId ? 'PUT' : 'POST';
+        const endpoint = editId ? `${API_URL}/admin/trips/${editId}` : `${API_URL}/admin/add-trip`;
+
         const formData = new FormData();
         formData.append('title', document.getElementById('title').value);
         formData.append('price', document.getElementById('price').value);
         formData.append('description', document.getElementById('description').value);
+        formData.append('requirements', JSON.stringify(document.getElementById('requirements').value.split(',').map(s => s.trim())));
         formData.append('deadline', document.getElementById('deadline').value);
         formData.append('event_date', document.getElementById('event_date').value);
-        formData.append('image', document.getElementById('image').files[0]);
+        
+        const imageFile = document.getElementById('image').files[0];
+        if(imageFile) formData.append('image', imageFile);
 
-        const res = await fetch(`${API_URL}/admin/add-trip`, {
-            method: 'POST',
-            body: formData
-        });
+        const res = await fetch(endpoint, { method: method, body: formData });
 
         if (res.ok) {
-            alert('Adventure Added!');
-            location.reload();
+            alert(editId ? 'Adventure Updated!' : 'Adventure Added!');
+            resetForm();
+            loadTrips();
         }
     });
 
-    // 3. Delete Trip Logic
+    // 6. DELETE LOGIC
     async function deleteTrip(id) {
-        if(confirm("Are you sure you want to remove this trip?")) {
+        if(confirm("Permanently remove this expedition?")) {
             await fetch(`${API_URL}/admin/trips/${id}`, { method: 'DELETE' });
             loadTrips();
         }
     }
-
-    loadTrips();
 </script>
+
 </body>
 </html>
