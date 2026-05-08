@@ -119,6 +119,31 @@ app.put('/api/admin/trips/:id', upload.single('image'), async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+// --- ADMIN LOGIN ROUTE ---
+app.post('/api/admin/login', async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        // Query your Neon database for the admin
+        const result = await pool.query(
+            'SELECT * FROM admins WHERE email = $1 AND password = $2', 
+            [email, password]
+        );
+
+        if (result.rows.length > 0) {
+            // Success: User found in the database
+            res.json({ success: true, message: "Login successful" });
+        } else {
+            // Failure: No match found
+            res.status(401).json({ success: false, message: "Invalid email or password" });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Server database error" });
+    }
+});
+
+
+
 // --- 4. START SERVER ---
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => console.log(`Dynamic Adventures live on port ${PORT}`));
